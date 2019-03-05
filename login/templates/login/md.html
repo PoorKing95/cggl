@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="js/md5.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<input type="text" id="ceshi" />
+		<button type="button" onclick="tijiao()">ceshi</button>
+		<script type="text/javascript">  
+			function tijiao(){
+				var ceshi = $('#ceshi').val()
+				var hash = hex_md5(ceshi);
+			}
+		</script>  
+	</body>
+</html>

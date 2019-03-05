@@ -1,0 +1,424 @@
+<!-- 用于注册的界面 -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+
+    <title>Bootstrap Admin Template </title>
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+    
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/font-icon-style.css">
+    <link rel="stylesheet" href="/static/css/style.default.css" id="theme-stylesheet">
+
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="/static/css/pages/login.css">
+</head>
+
+<body> 
+
+<!--====================================================
+                        PAGE CONTENT
+======================================================--> 
+      <section class="hero-area">
+        <div class="overlay"></div>
+        <div class="container">
+          <div class="row">
+			<div class="col-sm-2 col-lg-2 col-md-2"></div>
+            <div class="col-sm-6 col-md-8 col-lg-7">
+							<div class="contact-h-cont">
+                <!-- <div style="background: #FFFFFF; padding: 10px; border-radius: 5px;"> -->
+                  <h3 class="text-center"><img src="/static/img/logo.png" class="img-fluid" alt=""></h3><br>
+                  <form method='post'  class="form-horizontal" action="/regist/">
+									{% csrf_token %}
+									<!-- {% if message %}
+                    <div class="alert alert-warning" id="message">{{ message }}</div>
+									{% endif %} -->
+										<div class="alert alert-warning message_hidden"  id="message"></div>
+										 <div id="show1">
+											<div class="form-group">
+												<label for="username" class="control-label">用户名
+												<span id="show_mess1" class="show_mess"></span>
+												</label>
+												<input type="text" class="form-control" name='username' id="username" placeholder="请输入用户名">
+											</div>
+											<div class="form-group">
+												<label for="exampleInputEmail1" >密码
+												<span id="show_mess2" class="show_mess"></span>
+												</label>
+												<input class="form-control" type="password" name='password' id="upassword" placeholder="请输入密码">
+											</div>
+											<div class="form-group">
+												<label for="exampleInputEmail1">确认密码
+												<span id="show_mess3" class="show_mess"></span>
+												</label>
+												<input class="form-control" name='enpassword' type="password" id="enupassword" placeholder="确认密码">
+											</div>
+
+											<div class="form-check">
+												<label class=" mb-2 mr-sm-2 mb-sm-0">
+														<span class="custom-control-description">已有账户？<a href="/login/">返回登录</a></span>
+												</label>
+											</div>
+											<div style="line-height: 5px; margin: 0px;">
+												&nbsp;
+											</div>
+											<button class="btn col-md-12 btn-blue" id="next1" role="button"  type="button" disabled=''   onclick="change(this.id)">
+												<i fa fa-right-arrow></i>下一步
+											</button>
+										</div>
+										<div id="show2" >
+											<div class="form-group">
+												<label for="mail">邮箱
+												<span id="show_mess4" class="show_mess"></span>
+												</label>
+												<input type="text" name='umail' class="form-control" id="umail" placeholder="请输入邮箱" onblur="hide()" onfocus="hide()">
+												<ul class="list"></ul>
+											</div>
+											<div class="form-group">
+												<label for="phone">手机
+												<span id="show_mess5" class="show_mess"></span>
+												</label>
+												<input type="number" name='uphone' class="form-control" id="uphone" placeholder="请输入手机号">
+											</div>
+											<div class="form-group">
+												<label for="qq">QQ
+												<span id="show_mess6"  class="show_mess"></span>
+												</label>
+												<input name='uqq' type="text" class="form-control" id="uqq" placeholder="请输入qq号">
+											</div>
+											<div class="form-check">
+												<label class=" mb-2 mr-sm-2 mb-sm-0">
+													<span class="custom-control-description">已有账户？<a href="/login/">返回登录</a></span>
+												</label>
+											</div>
+											<div style="line-height: 5px; margin: 0px;">
+												&nbsp;
+											</div>
+											<div class="col-md-12 text-center">
+											<button class="btn  btn-blue col-md-5" id="previous1" role="button" type="button" onclick="change(this.id)">
+												<i fa fa-right-arrow></i>上一步
+											</button>
+											<span class="col-md-1"></span>
+											<button class="btn btn-blue col-md-5" id="next2" role="button" type="button" disabled onclick="change(this.id)" >
+												<i fa fa-right-arrow></i>下一步
+											</button>
+											</div>
+										</div>
+										<!-- <div id="show3">
+											<div class="form-group">
+												<label for="unamech">作者信息：</label>
+											</div>
+											<div class="form-group">
+												<label for="unamech">中文名
+												</label>
+												<input type="text" name='unamech' class="form-control" id="unamech" placeholder="中文名">
+											</div>
+											<div class="form-group">
+												<label for="unameen">英文名
+												</label>
+												<input type="text" class="form-control" id="unameen" name='unameen' placeholder="英文名">
+											</div>
+											<div class="form-check">
+												<label class=" mb-2 mr-sm-2 mb-sm-0">
+													<span class="custom-control-description">已有账户？<a href="/login/">返回登录</a></span>
+												</label>
+											</div>
+											<div style="line-height: 5px; margin: 0px;">
+												&nbsp;
+											</div>
+											<div class="col-md-12 text-center">
+											<button class="btn  btn-blue col-md-5" id="previous2" role="button" type="button" onclick="change(this.id)">
+												<i fa fa-right-arrow></i>上一步
+											</button>
+											<span class="col-md-1"></span>
+											<button class="btn btn-blue col-md-5" id="next3" role="button" type="button" disabled onclick="change(this.id)">
+												<i fa fa-right-arrow></i>下一步
+											</button>
+											</div>
+										</div> -->
+										<!-- <div id="show4">
+											<div class="form-group">
+												<label for="unamech">作者单位信息：</label>
+											</div>
+											<div class="form-group">
+												<input type="text" name='cnamech1' class="form-control" id="cnamech1" placeholder="一级单位中文名">
+											</div>
+											<div class="form-group">
+												<input type="text" class="form-control" id="cnameeg1" name='cnameeg1' placeholder="一级单位英文名">
+											</div>
+											<div class="form-group">
+												<input type="text" class="form-control" id="cnamech2" name='cnamech2' placeholder="二级单位中文名">
+											</div>
+											<div class="form-group">
+												<input type="text" class="form-control" id="cnameeg2" name='cnameeg2' placeholder="二级单位英文名">
+											</div>
+
+											<div class="form-check">
+												<label class=" mb-2 mr-sm-2 mb-sm-0">
+													<span class="custom-control-description">已有账户？<a href="/login/">返回登录</a></span>
+												</label>
+											</div>
+											<div style="line-height: 5px; margin: 0px;">
+												&nbsp;
+											</div>
+											<div class="col-md-12 text-center">
+											<button class="btn  btn-blue col-md-5" id="previous3" role="button" type="button" onclick="change(this.id)">
+												<i fa fa-right-arrow></i>上一步
+											</button>
+											<span class="col-md-1"></span>
+											<button class="btn btn-blue col-md-5" id="next4" role="button" type="button" onclick="change(this.id)" disabled>
+												<i fa fa-right-arrow></i>下一步
+											</button>
+											</div>
+										</div> -->
+									<!-- <div id="show5" >
+											<div class="form-group">
+												<label for="unamech">单位地址信息：</label>
+											</div>
+											<div class="form-group">
+												<input type="text" class="form-control" id="czipcode" name='czipcode' placeholder="单位邮编">
+											</div>
+											<div class="form-group">
+												<input type="text" class="form-control" id="addressch" name='addressch' placeholder="地址中文">
+											</div>
+											<div class="form-group">
+												<input type="text" class="form-control" id="addressen" name='addressen' placeholder="地址英文">
+											</div>
+											<div class="form-check">
+												<label class=" mb-2 mr-sm-2 mb-sm-0">
+													<span class="custom-control-description">已有账户？<a href="/login/">返回登录</a></span>
+												</label>
+											</div>
+											<div style="line-height: 5px; margin: 0px;">
+												&nbsp;
+											</div>
+											<div class="col-md-12 text-center">
+											<button class="btn  btn-blue col-md-5" id="previous4" role="button" type="button" onclick="change(this.id)">
+												<i fa fa-right-arrow></i>上一步
+											</button>
+											<span class="col-md-1"></span>
+											<button class="btn btn-blue col-md-5" id='sub_form'  role="button" type="submit">
+												<i fa fa-right-arrow></i>提&nbsp;&nbsp;&nbsp;&nbsp;交
+											</button>
+											</div>
+										</div> -->
+                  </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <!--Global Javascript -->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/tether.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+	<!-- <script src='/static/js/regist.js'></script> -->
+	<script src="/static/js/mail.js"></script>
+	<!-- <script>
+		function change($id){
+			if($id=='next1')
+				deal(1)
+			if($id=='next2')
+				deal(2)
+			if($id=='next3')
+				deal(3)
+			if($id=='next4')
+				deal(4)
+			if($id=='previous1')
+				deal(0)
+			if($id=='previous2')
+				deal(1)
+			if($id=='previous3')
+				deal(2)
+			if($id=='previous4')
+				deal(3)
+		}
+		function deal($deal){
+			for(i=0;i<5;i++){
+				$("#show"+(i+1)+"").hide()
+			}
+			$("#show"+($deal+1)+"").show()
+		}
+		$('#uaccount').bind("input propertychange", function(){
+			cnext1()
+			sub();
+		});
+		$('#upassword').bind("input propertychange", function(){
+			cnext1()
+			sub();
+		});
+		$('#enupassword').bind("input propertychange", function(){
+			cnext1()
+			sub();
+		});
+		function cnext1(){
+			a = $('#uaccount').val()
+			b = $('#upassword').val()
+			c = $('#enupassword').val()
+			if( a.length>5 && b.length>5 && b==c)
+			{
+				$('#next1').removeAttr('disabled');
+			}
+			else{
+				$('#next1').attr("disabled",'disabled');
+			}
+		}
+
+		$('#umail').bind("input propertychange", function(){
+			cnext2()
+			sub();
+
+		});
+		$('#uphone').bind("input propertychange", function(){
+			cnext2()
+			sub();
+
+		});
+		$('#uqq').bind("input propertychange", function(){
+			cnext2()
+			sub();
+		});
+		$('#uwechat').bind("input propertychange", function(){
+			cnext2()
+			sub();
+		});
+		function cnext2(){
+			a = $('#uphone').val()
+			b = $('#uqq').val()
+			c = $('#uwechat').val()
+			d = $('#umail').val()
+			if( a.length==11 && b.length>4 && c.length>3 && d.length>5)
+			{
+				$('#next2').removeAttr('disabled');
+			}
+			else{
+				$('#next2').attr("disabled",'disabled');
+			}
+		}
+
+		$('#unamech').bind("input propertychange", function(){
+			cnext3()
+			sub();
+		});
+		$('#unameen').bind("input propertychange", function(){
+			cnext3()
+			sub();
+		});
+		function cnext3(){
+			a = $('#unamech').val()
+			b = $('#unameen').val()
+			if( a.length>0 && b.length>0)
+			{
+				$('#next3').removeAttr('disabled');
+			}
+			else{
+				$('#next3').attr("disabled",'disabled');
+			}
+		}
+
+		$('#cnamech1').bind("input propertychange", function(){
+			cnext4()
+			sub();
+		});
+		$('#cnameeg1').bind("input propertychange", function(){
+			cnext4()
+			sub();
+		});
+		$('#cnamech2').bind("input propertychange", function(){
+			cnext4()
+			sub();
+		});
+		$('#cnameeg2').bind("input propertychange", function(){
+			cnext4();
+			sub();
+		});
+		function cnext4(){
+			a = $('#cnamech1').val()
+			b = $('#cnameeg1').val()
+			c = $('#cnamech2').val()
+			d = $('#cnameeg2').val()
+			if( a.length>0 && b.length>0 && c.length>0 && d.length>0)
+			{
+				$('#next4').removeAttr('disabled');
+			}
+			else{
+				$('#next4').attr("disabled",'disabled');
+			}
+		}
+		$('#czipcode').bind("input propertychange", function(){
+			sub();
+		});
+		$('#addressch').bind("input propertychange", function(){
+			sub();
+		});
+		$('#addressen').bind("input propertychange", function(){
+			sub();
+		});
+		function sub(){
+			a1 = $('#uaccount').val()
+			a2 = $('#upassword').val()
+			a3 = $('#enupassword').val()
+			a4 = $('#umail').val()
+			a5 = $('#uphone').val()
+			a6 = $('#uqq').val()
+			a7 = $('#uwechat').val()
+			a8 = $('#unamech').val()
+			a9 = $('#unameen').val()
+			a10 = $('#cnamech1').val()
+			a11 = $('#cnameeg1').val()
+			a12 = $('#cnamech2').val()
+			a13 = $('#cnameeg2').val()
+			a14 = $('#czipcode').val()
+			a15 = $('#addressch').val()
+			a16 = $('#addressen').val()
+			if(a1.length>5 && a2.length>5 && a3==a2 && a4.length>5 &&a5.length==11 && a6.length>4 && a7.length>4 && a8.length>0&& a9.length>0&& a10.length>0&& a11.length>0&& a12.length>0&& a13.length>0&& a14.length>0&& a15.length>0&& a16.length>0)
+			{
+				$('#sub_form').removeAttr('disabled')
+			}
+			else{
+				$('#sub_form').attr('disabled','disabled')
+			}
+		}
+	</script> -->
+		<script>
+			$("#username").bind("input propertychange", function () {
+				$.ajax({
+					type='post',
+					url : "/check/",
+					async: true,
+					dataType: 'json',
+					data:{
+						deal_type: this.id,
+						deal_name: $('#username').val()
+					},
+					success: function(ret){
+						alert('121212')
+					}
+				});
+			});
+			function show_warning(deal){
+				$action = $('#message')
+				if(deal != '')
+				{
+					$action.removeClass('message_hidden')
+					$action.html(deal)
+				}
+				else
+				$action.addClass('message_hidden')
+			}
+		</script>
+</body>
+
+</html>

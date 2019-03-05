@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p>请输入两个数字</p>
+<form action="/add/" method="get">
+    a: <input type="text" id="a" name="a"> <br>
+    b: <input type="text" id="b" name="b"> <br>
+    <p>result: <span id='result'></span></p>
+    <button type="button" id='sum'>提交</button>
+</form>
+ 
+ 
+<div id="dict">Ajax 加载字典</div>
+<p id="dict_result"></p>
+ 
+<div id="list">Ajax 加载列表</div>
+<p id="list_result"></p>
+ 
+ 
+<script src="/static/js/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+          $.getJSON('/test/',function(ret){
+              //返回值 ret 在这里是一个字典
+            /*$.each(ret, function(key,val){
+                $('#dict_result').append(key + ':'+val+'<br>')
+            });*/
+            for(i in ret.test){
+                $('#dict_result').append(ret.test[i].pages+'<br>')
+            }
+            })
+            //$('#dict_result').append(ret.id + '<br>');
+          
+           
+    });
+</script>
+</body>
+</html>

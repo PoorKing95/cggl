@@ -1,0 +1,287 @@
+{% load static %}
+<!-- 用于论文的信息录入 -->
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+
+    <title>Bootstrap Admin Template </title>
+    <link rel="shortcut icon" href="{% static 'polls/img/favicon.ico' %}">
+
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'polls/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'polls/css/font-icon-style.css' %}">
+    <link rel="stylesheet" href="{% static 'polls/css/style.default.css' %}" id="theme-stylesheet">
+
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="{% static 'polls/css/form.css' %}">
+
+    <style>
+        .line {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            margin-left: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<!--====================================================
+                     MAIN NAVBAR
+======================================================-->
+    <header class="header">
+        <nav class="navbar navbar-expand-lg ">
+            <div class="search-box">
+                <button class="dismiss"><i class="icon-close"></i></button>
+                <form id="searchForm" action="#" role="search">
+                    <input type="search" placeholder="Search Now" class="form-control">
+                </form>
+            </div>
+            <div class="container-fluid ">
+                <div class="navbar-holder d-flex align-items-center justify-content-between">
+                    <div class="navbar-header">
+                        <a href="{% url 'login:index' %}" class="navbar-brand">
+                            <div class="brand-text brand-big hidden-lg-down"><img src="{% static 'polls/img/logo-white.png' %}" alt="Logo" class="img-fluid"></div>
+                            <div class="brand-text brand-small"><img src="{% static 'polls/img/logo-icon.png' %}" alt="Logo" class="img-fluid"></div>
+                        </a>
+                        <a id="toggle-btn" href="#" class="menu-btn active">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </a>
+                    </div>
+                </div>
+                <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                    <!-- Expand-->
+                    <li class="nav-item dropdown"><a id="profile" class="nav-link logout" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ request.session.user_name }}</a>
+                        <ul aria-labelledby="profile" class="dropdown-menu profile">
+                            <li>
+                                <a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                    <div class="msg-body" style="margin-left:30px ;">
+                                        <h3 class="h5"><i class="fa fa-user-o " style="color: #fff; background: #333;"></i>{{ request.session.user_name }}</h3><span>{{ request.session.user_mail }}</span>
+                                    </div>
+                                </a>
+                                <hr>
+                            </li>
+                            <li>
+                                <a rel="nofollow" href="profile.html" class="dropdown-item">
+                                    <div class="notification">
+                                        <div class="notification-content" style="margin-left: 30px;"><i class="fa fa-user "></i>用户中心</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a rel="nofollow" href="profile.html" class="dropdown-item">
+                                    <div class="notification">
+                                        <div class="notification-content" style="margin-left: 30px;"><i class="fa fa-file"></i>论文中心</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a rel="nofollow" href="profile.html" class="dropdown-item">
+                                    <div class="notification">
+                                        <div class="notification-content" style="margin-left: 30px;"><i class="fa fa-hand-paper-o"></i>提交论文</div>
+                                    </div>
+                                </a>
+                                <hr>
+                            </li>
+                            <li>
+                                <a rel="nofollow" href="{% url 'login:logout' %}" class="dropdown-item">
+                                    <div class="notification">
+                                        <div class="notification-content" style="margin-left: 30px;"><i class="fa fa-power-off"></i>
+										注销
+										</div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item d-flex align-items-center"><a id="menu-toggle-right" class="nav-link" href="#"><i class="fa fa-bars"></i></a></li>
+
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+<!--====================================================
+                    PAGE CONTENT
+======================================================-->
+    <div class="page-content d-flex align-items-stretch">
+
+       <!--***** SIDE NAVBAR *****-->
+        <nav class="side-navbar">
+            <div class="sidebar-header d-flex align-items-center">
+                <div class="avatar"><img src="/static/img/timg.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                <div class="title">
+					<h1 class="h4">您好,{{ request.session.namech }}</h1>
+                    <input type='hidden' id='user_name' value={{ request.session.user_name }}>
+{#                {% endif %}#}
+				</div>
+            </div>
+            <hr>
+            <!-- Sidebar Navidation Menus-->
+            <ul class="list-unstyled">
+                <li> <a href="{% url 'login:index' %}"><i class="icon-home"></i>主页</a></li>
+                <li class="active"> <a href="#"> <i class="fa fa-file"></i>成果录入 </a></li>
+                <li><a href="#apps" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>应用</a>
+                    <ul id="apps" class="collapse list-unstyled">
+                        <li><a href="calendar.html">暂未开通</a></li>
+                        <li><a href="email.html">暂未开通</a></li>
+                        <li><a href="media.html">暂未开通</a></li>
+                        <li><a href="invoice.html">暂未开通</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="#forms" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-building-o"></i>图表</a>
+                    <ul id="forms" class="collapse list-unstyled">
+                        <li><a href="basic-form.html">暂未开通</a></li>
+                        <li><a href="form-layouts.html">暂未开通</a></li>
+                    </ul>
+                </li>
+                <li> <a href="maps.html"> <i class="fa fa-map-o"></i>暂未开通</a></li>
+                <li><a href="#pages" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-file-o"></i>文章</a>
+                    <ul id="pages" class="collapse list-unstyled">
+                        <li><a href="faq.html">暂未开通</a></li>
+                        <li><a href="empty.html">暂未开通</a></li>
+                        <li><a href="gallery.html">暂未开通</a></li>
+                        <li><a href="login.html">暂未开通</a></li>
+                        <li><a href="register.html">暂未开通</a></li>
+                        <li><a href="search-result.html">暂未开通</a></li>
+                        <li><a href="404.html">暂未开通</a></li>
+                    </ul>
+                </li>
+                <li > <a href="tables.html"> <i class="icon-grid"></i>暂未开通 </a></li>
+                {% comment %} <li><a href="#elements" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-globe"></i>UI Elements </a>
+                    <ul id="elements" class="collapse list-unstyled">
+                        <li><a href="ui-buttons.html">Buttons</a></li>
+                        <li><a href="ui-cards.html">Cards</a></li>
+                        <li><a href="ui-progressbars.html">Progress Bar</a></li>
+                        <li><a href="ui-timeline.html">Timeline</a></li>
+                    </ul>
+                </li> {% endcomment %}
+            </ul><span class="heading">Extras</span>
+        </nav>
+
+        <div class="content-inner form-cont">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <!--***** FORM INPUTS *****-->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="offset-md-3">论文信息预览</h3>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                            <div class="col-md-8 offset-md-3">
+                                <div class="row line">
+                                    <span style="width: 85px;">论文名称：</span>
+                                    <div class="col" style="color: gray;">
+                                        {{ paper.pname }}
+                                    </div>
+                                </div>
+                                <div class="row line">
+                                    <span style="width: 85px;">论文类型：</span>
+                                    <div class="col" style="color: gray;">
+                                        {{ paper.ptype }}
+                                    </div>
+                                </div>
+                                {% if paper.pifpub == 'true' %}
+                                    <div class="row line">
+                                        <span style="width: 85px;">出版地：</span>
+                                        <div class="col" style="color: gray;">
+                                            {{ paper.pplace }}
+                                        </div>
+                                    </div>
+                                    <div class="row line">
+                                        <span style="width: 85px;">出版年：</span>
+                                        <div class="col" style="color: gray;">
+                                            {{ paper.pyear }}
+                                        </div>
+                                    </div>
+                                    <div class="row line">
+                                        <span style="width: 85px;">页码：</span>
+                                        <div class="col" style="color: gray;">
+                                            {{ paper.ppage }}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% for author in authors %}
+                                  <div class="row line">
+                                    <span style="width: 85px;">作者{{ forloop.counter }}：</span>
+                                    <div class="col" style="color: gray;">
+                                        {{ author.anamech }}
+                                        {% if author.isComm %}
+                                            (第{{ author.commOrder }}通信作者)
+                                        {% endif %}
+                                    </div>
+                                  </div>
+                                {% endfor %}
+
+
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 20px;">
+                            <a class="btn btn-general btn-blue mr-2 offset-md-3 col-md-1" href="{% url 'polls:save_paper' %}">保存</a>
+                            <button type="button" class="btn btn-general btn-blue mr-2 col-md-1">返回编辑</button>
+                            <button type="button" class="btn btn-general btn-blue mr-2 col-md-1">继续录入</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Global Javascript -->
+    <script src="{% static 'polls/js/jquery.min.js' %}"></script>
+    <script src="{% static 'polls/js/popper/popper.min.js' %}"></script>
+    <script src="{% static 'polls/js/tether.min.js' %}"></script>
+    <script src="{% static 'polls/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'polls/js/jquery.cookie.js' %}"></script>
+    <script src="{% static 'polls/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'polls/js/chart.min.js' %}"></script>
+    <script src="{% static 'polls/js/front.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+
+    <!--Core Javascript -->
+    <script>
+        new Chart(document.getElementById("myChart-nav").getContext('2d'), {
+          type: 'doughnut',
+          data: {
+            labels: ["M", "T", "W", "T", "F", "S", "S"],
+            datasets: [{
+              backgroundColor: [
+                "#2ecc71",
+                "#3498db",
+                "#95a5a6",
+                "#9b59b6",
+                "#f1c40f",
+                "#e74c3c",
+                "#34495e"
+              ],
+              data: [12, 19, 3, 17, 28, 24, 7]
+            }]
+          },
+          options: {
+              legend: { display: false },
+              title: {
+                display: true,
+                text: ''
+               }
+            }
+        });
+    </script>
+</body>
+
+</html>
