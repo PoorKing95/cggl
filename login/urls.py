@@ -12,5 +12,6 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('test/', views.test, name='test'),
     path('tables/', views.tables, name='tables'),
-    path('check/', views.test, name='check'),
+    path('check/', views.check, name='check'),
+    path('test1/', views.test1, name='test1')
 ]

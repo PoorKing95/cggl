@@ -38,7 +38,7 @@
             <div class="col-sm-6 col-md-8 col-lg-7">
 							<div class="contact-h-cont">
                 <!-- <div style="background: #FFFFFF; padding: 10px; border-radius: 5px;"> -->
-                  <h3 class="text-center"><img src="/static/img/logo.png" class="img-fluid" alt=""></h3><br>
+                  <!-- <h3 class="text-center"><img src="/static/img/logo.png" class="img-fluid" alt=""></h3><br> -->
                   <form method='post'  class="form-horizontal" action="/regist/">
 									{% csrf_token %}
 									<!-- {% if message %}
@@ -48,19 +48,16 @@
 										 <div id="show1">
 											<div class="form-group">
 												<label for="username" class="control-label">用户名
-												<span id="show_mess1" class="show_mess"></span>
 												</label>
 												<input type="text" class="form-control" name='username' id="username" placeholder="请输入用户名">
 											</div>
 											<div class="form-group">
 												<label for="exampleInputEmail1" >密码
-												<span id="show_mess2" class="show_mess"></span>
 												</label>
 												<input class="form-control" type="password" name='password' id="upassword" placeholder="请输入密码">
 											</div>
 											<div class="form-group">
 												<label for="exampleInputEmail1">确认密码
-												<span id="show_mess3" class="show_mess"></span>
 												</label>
 												<input class="form-control" name='enpassword' type="password" id="enupassword" placeholder="确认密码">
 											</div>
@@ -73,7 +70,7 @@
 											<div style="line-height: 5px; margin: 0px;">
 												&nbsp;
 											</div>
-											<button class="btn col-md-12 btn-blue" id="next1" role="button"  type="button" disabled=''   onclick="change(this.id)">
+											<button class="btn col-md-12 btn-blue" id="next" role="button"  type="button"  >
 												<i fa fa-right-arrow></i>下一步
 											</button>
 										</div>
@@ -393,21 +390,114 @@
 		}
 	</script> -->
 		<script>
-			$("#username").bind("input propertychange", function () {
+			var suc = new Array
+			suc[0]=false
+			var c_username= /^[a-zA-Z]{1}([a-zA-Z0-9]|[_]){4,19}$//* 用户名格式 */
+			var c_password= /^([a-zA-Z0-9]|[_]){6,20}$/ //密码是6-20位，不能有除_以外的特殊字符
+			//---------------------------以下为用户名验证----------------------------
+			$("#username").blur(function () {
 				$.ajax({
-					type='post',
+					type : 'POST',
 					url : "/check/",
-					async: true,
-					dataType: 'json',
+					dataType : 'json',
 					data:{
-						deal_type: this.id,
-						deal_name: $('#username').val()
+						'deal_type': $(this).attr('id'),
+						'deal_name': $('#username').val()
 					},
 					success: function(ret){
-						alert('121212')
+						show_warning(ret.message)
+						if(ret.message=='')
+							suc[0]=true
+						else
+							suc[0]=false
 					}
 				});
 			});
+			$('#username').bind("input propertychange",function(){
+				username = $('#username').val()
+				if(username.length>4&&username.length<21)
+				{
+					if(!c_username.exec(username))
+					{
+						show_warning('用户名以字母或_开头')
+						suc[1]=false
+					}
+					else
+					{
+						show_warning('')
+						suc[1]=true
+					}
+				}
+				else
+				{
+					show_warning('用户名必须为5—20位之间')
+					suc[1]=false
+				}
+			});
+			//-----------------------------以上为用户名验证-------------------------------
+			
+			//-----------------------------以下为密码验证-------------------------------
+			$('#upassword').bind("input propertychange",function(){
+				pwd = $(this).val()
+				if(pwd.length>5&&pwd.length<21)
+				{
+					if(!c_password.exec(pwd))
+					{
+						show_warning('密码只能包含字母、数字以及_')
+						suc[2]=false
+					}	
+					else
+					{
+						show_warning('')
+						suc[2]=true
+					}
+				}
+				else
+				{
+					show_warning('密码必须为6—20位之间')
+					suc[2]=false
+				}
+			});
+			$('#enupassword').bind("input propertychange",function(){
+				pwd = $('#upassword').val()
+				enpwd = $(this).val()
+				if(enpwd==pwd)
+				{
+						show_warning('')
+						suc[3]=true
+				}
+				else
+				{
+					show_warning('两次密码不一致！')
+					suc[3]=false
+				}
+			});
+			//-----------------------------以上为密码验证-------------------------------
+			
+			//-----------------------------第一页翻页-------------------------------
+			$('#next').click(function(){
+				for(var i=0;i<suc.length;i++){
+					if(suc[i]==false){
+						if(i==0||i==1) 
+						{
+							show_warning('请检查用户名')
+							$('#username').focus()
+						}
+						if(i==2) 
+						{
+							show_warning('请检查密码是否符合格式')
+							$('#upassword').focus()
+						}
+						if(i==3) 
+						{
+							show_warning('两次密码不一致')
+							$('#enupassword').focus()
+						}
+					}
+				}
+			})
+
+			//-----------------------------第一页翻页-------------------------------
 			function show_warning(deal){
 				$action = $('#message')
 				if(deal != '')

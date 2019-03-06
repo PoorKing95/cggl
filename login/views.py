@@ -12,12 +12,15 @@ from login.md5 import md5_key
 from login.select import select
 from django.http import JsonResponse
 import json
-
+from django.views.decorators.csrf import csrf_exempt
 
 def index(request):
     pass
     return redirect('/tables/')
 
+def test1(request):
+    pass
+    return render(request, 'login/table_1.html')
 
 def tables(request):
     if request.session.get('is_login', None) == None:
@@ -27,21 +30,20 @@ def tables(request):
 
 def root(request):
     return HttpResponse("hello world")
-
+@csrf_exempt
 def check(request):
-    if request.session.get('is_login', None) == None:
-        return redirect('/login/')
-    else:
-        dealname = request.POST.get('deal_name')
-        dealtype = request.POST.get('deal_type')
-        if(dealtype == 'username'):
-            try:
-                acc = account.objects.get(uaccount=dealname)
-                if acc:
-                    message='用户名已经存在'
-            except:
-                message='用户名不存在'
-        return JsonResponse({"message": message})
+    dealtype = request.POST.get("deal_type")
+    dealname = request.POST.get("deal_name")
+    message=''
+    if dealtype == 'username':
+        try:
+            lookfor = account.objects.get(uaccount=dealname)
+            if lookfor:
+                message = '用户名已存在'
+        except:
+            message = ''
+    ret = {'message':message}
+    return JsonResponse(ret)
 
 
 
