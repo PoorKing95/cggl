@@ -49,6 +49,20 @@ def check(request):
                 message = '邮箱已经被注册'
         except:
             message = ''
+    if dealtype == 'uphone':
+        try:
+            lookfor = account.objects.get(uphone=dealname)
+            if lookfor:
+                message = '手机号已经被注册'
+        except:
+            message = ''
+    if dealtype == 'uqq':
+        try:
+            lookfor = account.objects.get(uqq=dealname)
+            if lookfor:
+                message = 'QQ号已经被注册'
+        except:
+            message = ''
     ret = {'message':message}
     return JsonResponse(ret)
 
