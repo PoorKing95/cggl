@@ -45,7 +45,7 @@
                     <div class="alert alert-warning" id="message">{{ message }}</div>
 									{% endif %} -->
 										<div class="alert alert-warning message_hidden"  id="message"></div>
-										 <div id="show1">
+										 <div id="show1" class="message_hidden">
 											<div class="form-group">
 												<label for="username" class="control-label">用户名
 												</label>
@@ -74,23 +74,20 @@
 												<i fa fa-right-arrow></i>下一步
 											</button>
 										</div>
-										<div id="show2" >
+										<div id="show2"  >
 											<div class="form-group">
 												<label for="mail">邮箱
-												<span id="show_mess4" class="show_mess"></span>
 												</label>
-												<input type="text" name='umail' class="form-control" id="umail" placeholder="请输入邮箱" onblur="hide()" onfocus="hide()">
-												<ul class="list"></ul>
+												<input type="text" name='umail' class="form-control" id="umail" placeholder="请输入邮箱">
+												<ul id="show_mail" class="list"></ul>
 											</div>
 											<div class="form-group">
 												<label for="phone">手机
-												<span id="show_mess5" class="show_mess"></span>
 												</label>
 												<input type="number" name='uphone' class="form-control" id="uphone" placeholder="请输入手机号">
 											</div>
 											<div class="form-group">
 												<label for="qq">QQ
-												<span id="show_mess6"  class="show_mess"></span>
 												</label>
 												<input name='uqq' type="text" class="form-control" id="uqq" placeholder="请输入qq号">
 											</div>
@@ -103,12 +100,12 @@
 												&nbsp;
 											</div>
 											<div class="col-md-12 text-center">
-											<button class="btn  btn-blue col-md-5" id="previous1" role="button" type="button" onclick="change(this.id)">
+											<button class="btn  btn-blue col-md-5" id="previous" role="button" type="button" >
 												<i fa fa-right-arrow></i>上一步
 											</button>
 											<span class="col-md-1"></span>
-											<button class="btn btn-blue col-md-5" id="next2" role="button" type="button" disabled onclick="change(this.id)" >
-												<i fa fa-right-arrow></i>下一步
+											<button class="btn btn-blue col-md-5" id="sub" role="button" type="submit" >
+												<i fa fa-right-arrow></i>提&nbsp;&nbsp;&nbsp;&nbsp;交
 											</button>
 											</div>
 										</div>
@@ -391,11 +388,14 @@
 	</script> -->
 		<script>
 			var suc = new Array
-			suc[0]=false
+			for(j=0;j<10;j++)
+				suc[j]=false
 			var c_username= /^[a-zA-Z]{1}([a-zA-Z0-9]|[_]){4,19}$//* 用户名格式 */
 			var c_password= /^([a-zA-Z0-9]|[_]){6,20}$/ //密码是6-20位，不能有除_以外的特殊字符
+			var c_umail = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/ //邮箱格式。
+			var c_uphone = /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\\d{8}$/ //最新的手机格式
 			//---------------------------以下为用户名验证----------------------------
-			$("#username").blur(function () {
+			/*$("#username").blur(function () {
 				$.ajax({
 					type : 'POST',
 					url : "/check/",
@@ -412,26 +412,41 @@
 							suc[0]=false
 					}
 				});
-			});
+			});*/
 			$('#username').bind("input propertychange",function(){
 				username = $('#username').val()
 				if(username.length>4&&username.length<21)
 				{
 					if(!c_username.exec(username))
 					{
-						show_warning('用户名以字母或_开头')
-						suc[1]=false
+						show_warning('用户名以字母开头，其余为字母、数字和_')
+						suc[0]=false
 					}
 					else
 					{
 						show_warning('')
-						suc[1]=true
+						$.ajax({
+							type : 'POST',
+							url : "/check/",
+							dataType : 'json',
+							data:{
+								'deal_type': $(this).attr('id'),
+								'deal_name': $('#username').val()
+							},
+							success: function(ret){
+								show_warning(ret.message)
+								if(ret.message=='')
+									suc[0]=true
+								else
+									suc[0]=false
+							}
+						});
 					}
 				}
 				else
 				{
 					show_warning('用户名必须为5—20位之间')
-					suc[1]=false
+					suc[0]=false
 				}
 			});
 			//-----------------------------以上为用户名验证-------------------------------
@@ -439,65 +454,172 @@
 			//-----------------------------以下为密码验证-------------------------------
 			$('#upassword').bind("input propertychange",function(){
 				pwd = $(this).val()
-				if(pwd.length>5&&pwd.length<21)
-				{
+				enpwd = $('#enupassword').val()
+				if(enpwd=='')
+				{	
 					if(!c_password.exec(pwd))
 					{
-						show_warning('密码只能包含字母、数字以及_')
-						suc[2]=false
+						show_warning('密码长度为6位，且只能包含字母、数字以及_')
+						suc[1]=false
 					}	
 					else
 					{
 						show_warning('')
-						suc[2]=true
+						suc[1]=true
 					}
 				}
-				else
+				if(enpwd != '')
 				{
-					show_warning('密码必须为6—20位之间')
-					suc[2]=false
+					if(!c_password.exec(pwd))
+					{
+						show_warning('密码长度为6位，且只能包含字母、数字以及_')
+						suc[1]=false
+					}	
+					else
+					{
+						suc[1]=true
+						if(enpwd==pwd)
+						{
+							show_warning('')
+							suc[2]=true
+						}
+						else
+						{
+							show_warning('两次密码不一致')
+							suc[2]=false
+						}
+					}
 				}
 			});
 			$('#enupassword').bind("input propertychange",function(){
 				pwd = $('#upassword').val()
-				enpwd = $(this).val()
-				if(enpwd==pwd)
-				{
+				enpwd = $('#enupassword').val()
+				if(enpwd=='')
+				{	
+					if(!c_password.exec(pwd))
+					{
+						show_warning('密码长度为6位，且只能包含字母、数字以及_')
+						suc[1]=false
+					}	
+					else
+					{
 						show_warning('')
-						suc[3]=true
+						suc[1]=true
+					}
 				}
-				else
+				if(enpwd != '')
 				{
-					show_warning('两次密码不一致！')
-					suc[3]=false
+					if(!c_password.exec(pwd))
+					{
+						show_warning('密码长度为6位，且只能包含字母、数字以及_')
+						suc[1]=false
+					}	
+					else
+					{
+						suc[1]=true
+						if(enpwd==pwd)
+						{
+							show_warning('')
+							suc[2]=true
+						}
+						else
+						{
+							show_warning('两次密码不一致')
+							suc[2]=false
+						}
+					}
 				}
 			});
 			//-----------------------------以上为密码验证-------------------------------
 			
 			//-----------------------------第一页翻页-------------------------------
 			$('#next').click(function(){
-				for(var i=0;i<suc.length;i++){
+				var i =0
+				for(i=0;i<3;i++){
 					if(suc[i]==false){
-						if(i==0||i==1) 
+						if(i==0) 
 						{
 							show_warning('请检查用户名')
 							$('#username').focus()
+							break;
 						}
-						if(i==2) 
+						if(i==1) 
 						{
 							show_warning('请检查密码是否符合格式')
 							$('#upassword').focus()
+							break;
 						}
-						if(i==3) 
+						if(i==2) 
 						{
 							show_warning('两次密码不一致')
 							$('#enupassword').focus()
+							break;
 						}
 					}
 				}
+				if(i==3)
+				{
+					$('#show1').addClass('message_hidden')
+					$('#show2').removeClass('message_hidden')
+				}
 			})
-
 			//-----------------------------第一页翻页-------------------------------
+			//-----------------------------回到第一页-------------------------------
+			$('#previous').click(function(){
+				$('#show1').removeClass('message_hidden')
+				$('#show2').addClass('message_hidden')
+			});
+			//-----------------------------回到第一页-------------------------------
+			//-----------------------------邮箱格式-------------------------------
+			function deal_mail(umail){
+				if(!c_umail.exec(umail))
+				{
+					show_warning('邮箱格式不正确')
+					suc[3]=false//若邮箱不符合正则，为假
+				}
+				else
+				{
+					$.ajax({
+						type : 'POST',
+						url : "/check/",
+						dataType : 'json',
+						data:{
+							'deal_type': $('#umail').attr('id'),
+							'deal_name': umail
+						},
+						success: function(ret){
+							show_warning(ret.message)
+							if(ret.message=='')
+								suc[3]=true//若数据库没有为真
+							else
+								suc[3]=false//若数据库有为假
+						}
+					});
+				}
+			}
+			$('#umail').bind("input propertychange",function(){
+				umail = $(this).val()
+				deal_mail(umail)//input内容改变触发
+			});
+			$('#show_mail').click(function(){
+				umail = $('#umail').val()
+				deal_mail(umail)//点击下拉列表触发
+			});
+			//-----------------------------邮箱格式-------------------------------
+			//-----------------------------手机格式-------------------------------
+			$('#uphone').bind("input propertychange",function(){
+				uphone = $(this).val()
+				if(!c_uphone.exec(uphone))
+				{
+					show_warning('手机格式不正确')
+					suc[4]=false
+				}
+				else
+				{
+					
+				}
+			});
+			//-----------------------------手机格式-------------------------------
 			function show_warning(deal){
 				$action = $('#message')
 				if(deal != '')

@@ -42,6 +42,13 @@ def check(request):
                 message = '用户名已存在'
         except:
             message = ''
+    if dealtype == 'umail':
+        try:
+            lookfor = account.objects.get(umail=dealname)
+            if lookfor:
+                message = '邮箱已经被注册'
+        except:
+            message = ''
     ret = {'message':message}
     return JsonResponse(ret)
 

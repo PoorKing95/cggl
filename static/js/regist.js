@@ -1,7 +1,7 @@
 function regist(deal,type){
 	var illegal1= /^[a-zA-Z]{1}([a-zA-Z0-9]|[_]){5,19}$//* 用户名格式 */
 	var illegal2= /^([a-zA-Z0-9]|[_]){6,20}$/ /* 只能输入6到20个字母数字下划线 */
-	var illegal3= /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$//* 邮箱格式 */
+	var illegal3= /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$//* 邮箱格式 */
 	var illegal4= /^1(3|4|5|7|8)\d{9}$/ /* 手机号格式 */
 	if(type == 'uaccount'){
 		if(deal.length < 6)
