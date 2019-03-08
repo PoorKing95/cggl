@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
 
-    <title>Bootstrap Admin Template </title>
+    <title>成果管理系统</title>
     <link rel="shortcut icon" href="/static/img/favicon.ico">
     
     <!-- global stylesheets -->
@@ -39,7 +39,7 @@
 							<div class="contact-h-cont">
                 <!-- <div style="background: #FFFFFF; padding: 10px; border-radius: 5px;"> -->
                   <!-- <h3 class="text-center"><img src="/static/img/logo.png" class="img-fluid" alt=""></h3><br> -->
-                  <form method='post'  class="form-horizontal" action="/regist/" onsubmit="return checkall()">
+                  <form method='post' id='sub_form'  class="form-horizontal"  onsubmit="return checkall()">
 									{% csrf_token %}
 									<!-- {% if message %}
                     <div class="alert alert-warning" id="message">{{ message }}</div>
@@ -655,11 +655,15 @@
 			});
 			//-----------------------------中文名格式-------------------------------
 			//-----------------------------英文名格式-------------------------------
+			function tonameen(nameen){
+				first = nameen.substring(0, 1).toUpperCase()
+				final = nameen.substring(1, nameen.length).toLowerCase()
+				nameen = first+final
+				return nameen
+			}
+			
 			$('#ufnameen').bind("input propertychange",function(){
-				ufnameen = $(this).val()
-				first = ufnameen.substring(0, 1).toUpperCase()
-				final = ufnameen.substring(1, ufnameen.length).toLowerCase()
-				ufnameen = first+final
+				ufnameen = tonameen($(this).val())
 				if(!c_ulfnameen.exec(ufnameen))
 				{
 					show_warning('Illegal Firstname (英文名不合法)')
@@ -672,10 +676,7 @@
 				}
 			});
 			$('#ulnameen').bind("input propertychange",function(){
-				ulnameen = $(this).val()
-				first = ulnameen.substring(0, 1).toUpperCase()
-				final = ulnameen.substring(1, ulnameen.length).toLowerCase()
-				ulnameen = first+final
+				ulnameen = tonameen($(this).val())
 				if(!c_ulfnameen.exec(ulnameen))
 				{
 					show_warning('Illegal Lastname (英文姓不合法)')
@@ -856,9 +857,43 @@
 					}
 				}
 				if(i==10)
-					return true
+				{
+					dealfen = tonameen($('#ufnameen').val())
+					deallen = tonameen($('#ulnameen').val())
+					alert(dealfen+''+deallen)
+					$.ajax({
+							type : 'POST',
+							url : "/regist/",
+							dataType : 'json',
+							data:{
+								'username':$('#username').val(),
+								'upassword':$('#upassword').val(),
+								'ufnamech':$('#ufnamech').val(),
+								'ulnamech':$('#ulnamech').val(),
+								'ufnameen':dealfen,
+								'ulnameen':deallen,
+								'umail':$('#umail').val(),
+								'uphone':$('#uphone').val(),
+								'uqq':$('#uqq').val(),
+							},
+							success: function(ret){
+								show_warning(ret.message)
+								if(ret.message=='badmess')
+									show_warning(ret.succ)
+								else
+									window.location.href="/login/"
+							}
+					});
+					return false
+				}
 			}
 			//-----------------------------提交检测-------------------------------
+			
+			//-----------------------------正式提交-------------------------------
+			$('#sub_form').submit(function(){
+			})
+			//-----------------------------正式提交-------------------------------
+			
 			function show_warning(deal){
 				$action = $('#message')
 				if(deal != '')

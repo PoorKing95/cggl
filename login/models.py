@@ -29,7 +29,7 @@ class account(models.Model):
     umail = models.CharField(max_length=100, unique=True)
     uphone = MyCharField(max_length=11)
     uqq = models.CharField(max_length=100, unique=True)
-    uwechat = models.CharField(max_length=100, unique=True)
+    uall = models.BooleanField()
     # c_time = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -45,7 +45,11 @@ class account(models.Model):
 #作者表
 class Author(models.Model):
     aid = models.BigAutoField(primary_key=True)
+    afnamech = models.CharField(max_length=1000)
+    alnamech = models.CharField(max_length=1000)
     anamech = models.CharField(max_length=1000)
+    afnameen = models.CharField(max_length=1000)
+    alnameen = models.CharField(max_length=1000)
     anameen = models.CharField(max_length=1000)
     amail = models.EmailField(max_length=100, unique=True)
 

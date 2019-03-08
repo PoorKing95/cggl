@@ -125,76 +125,51 @@ def register(request):
         return redirect('/tables/')
     return render(request, 'login/regist.html')
 
-
+@csrf_exempt
 def regist(request):
     if request.session.get('is_login', None) != None:
         return redirect('/tables/')
     # 登录状态下不允许注册
     username = request.POST.get('username', None)
-    password = request.POST.get('password', None)
+    password = request.POST.get('upassword', None)
+    ufnamech = request.POST.get('ufnamech', None)
+    ulnamech = request.POST.get('ulnamech', None)
+    ufnameen = request.POST.get('ufnameen', None)
+    ulnameen = request.POST.get('ulnameen', None)
     umail = request.POST.get('umail', None)
-    unamech = request.POST.get('unamech', None)
-    unameen = request.POST.get('unameen', None)
     uphone = request.POST.get('uphone', None)
     uqq = request.POST.get('uqq', None)
-    uwechat = request.POST.get('uwechat', None)
-    cnamech1 = request.POST.get('cnamech1', None)
-    cnameeg1 = request.POST.get('cnameeg1', None)
-    cnamech2 = request.POST.get('cnamech2', None)
-    cnameeg2 = request.POST.get('cnameeg2', None)
-    czipcode = request.POST.get('czipcode', None)
-    addressch = request.POST.get('addressch', None)
-    addressen = request.POST.get('addressen', None)
-    message = ''
+    unamech = ufnamech+ulnamech
+    unameen = ufnameen+ulnameen
     if password != None:
         password = md5_key(password)
-    if not (
-            username and password and umail and unamech and unameen and uphone and uqq and uwechat and cnamech1 and cnameeg1 and cnamech2 and cnameeg2 and czipcode and addressch and addressen):
-        if request.session.get('is_login', None) == None:
-            return render(request, 'login/regist.html', {"message": message})
-        message = '请全部填写'
-        return render(request, 'login/regist.html', {"message": message})
+    if not (username and password and umail and unamech and unameen and uphone and uqq):
+        message = {'message':'badmess','succ':'您的信息有误，请检查'}
+        return JsonResponse(message)
     else:
-        acc = account.objects.filter(uaccount=username)
-        uma = account.objects.filter(umail=umail)
+        user = account.objects.filter(uaccount=username)
+        if user:
+            message = {'message':'badmess','succ':'用户名重复'}
+            return JsonResponse(message)
+        mail = account.objects.filter(umail=umail)
+        if mail:
+            message = {'message':'badmess','succ':'邮箱重复'}
+            return JsonResponse(message)
+        uph = account.objects.filter(uphone=uphone)
+        if uph:
+            message = {'message':'badmess','succ':'手机号重复'}
+            return JsonResponse(message)
         uq = account.objects.filter(uqq=uqq)
-        uwe = account.objects.filter(uwechat=uwechat)
-        ch1 = Company.objects.filter(cnamech1=cnamech1, cnameeg1=cnameeg1, cnamech2=cnamech2, cnameeg2=cnameeg2,
-                                     czipcode=czipcode, addressch=addressch, addressen=addressen)
-        if acc:
-            message = "用户已经存在"
-            return render(request, 'login/regist.html', {"message": message})
-        if uma:
-            message = "邮箱已经被注册"
-            return render(request, 'login/regist.html', {"message": message})
         if uq:
-            message = "qq已经被注册"
-            return render(request, 'login/regist.html', {"message": message})
-        if uwe:
-            message = "微信已经被注册"
-            return render(request, 'login/regist.html', {"message": message})
-        if ch1:
-            pass
-        else:
-            new_company = Company(cnamech1=cnamech1, cnameeg1=cnameeg1, cnamech2=cnamech2, cnameeg2=cnameeg2,
-                                  czipcode=czipcode, addressch=addressch, addressen=addressen)
-            new_company.save()
-
-        # 保存到account的用户表中
-        new_test = account(uaccount=username, unamech=unamech, unameen=unameen, umail=umail, upassword=password,
-                           uphone=uphone, uqq=uqq, uwechat=uwechat)
+            message = {'message':'badmess','succ':'qq号重复'}
+            return JsonResponse(message)
+        new_test = account(uaccount=username, unamech=unamech, unameen=unameen, upassword=password,umail=umail ,uphone=uphone, uqq=uqq,uall=False)
         new_test.save()
         # 保存到uaccount的作者表中
-        new_uacc = Author(anamech=unamech, anameen=unameen, amail=umail)
+        new_uacc = Author(afnamech = ufnamech, alnamech = ulnamech, anamech=unamech, afnameen=ufnameen, alnameen=ulnameen, anameen=unameen, amail=umail)
         new_uacc.save()
-        find_aid = Author.objects.get(amail=umail)
-        find_cid = Company.objects.get(cnamech1=cnamech1, cnameeg1=cnameeg1, cnamech2=cnamech2, cnameeg2=cnameeg2,
-                                       czipcode=czipcode, addressch=addressch, addressen=addressen)
-        find_aid1 = Author.objects.get(aid=find_aid.aid)
-        find_cid1 = Company.objects.get(cid=find_cid.cid)
-        new_find = AuthorCompany(acorder=0, accurrent=0, company=find_cid1, author=find_aid1)
-        new_find.save()
-        return redirect('/login/')
+        message={'message':'注册成功','succ':'no'}
+        return JsonResponse(message)
 
 
 def logout(request):
