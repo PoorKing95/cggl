@@ -18,6 +18,10 @@ def index(request):
     pass
     return redirect('/tables/')
 
+def basic(request):
+    pass
+    return render(request, 'login/basic-form.html')
+
 def test1(request):
     pass
     return render(request, 'login/table_1.html')
@@ -109,6 +113,7 @@ def login(request):
                 request.session['user_name'] = acc.uaccount
                 request.session['user_mail'] = acc.umail
                 request.session['namech'] = acc.unamech
+                request.session['uall'] = acc.uall
                 request.session.set_expiry(60 * 15)
                 # return render(request,'login/tables.html',{'RS':RS})
                 return redirect('/tables/')

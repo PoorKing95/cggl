@@ -254,172 +254,7 @@
     <script src="/static/js/bootstrap.min.js"></script>
 	<!-- <script src='/static/js/regist.js'></script> -->
 	<script src="/static/js/mail.js"></script>
-	<!-- <script>
-		function change($id){
-			if($id=='next1')
-				deal(1)
-			if($id=='next2')
-				deal(2)
-			if($id=='next3')
-				deal(3)
-			if($id=='next4')
-				deal(4)
-			if($id=='previous1')
-				deal(0)
-			if($id=='previous2')
-				deal(1)
-			if($id=='previous3')
-				deal(2)
-			if($id=='previous4')
-				deal(3)
-		}
-		function deal($deal){
-			for(i=0;i<5;i++){
-				$("#show"+(i+1)+"").hide()
-			}
-			$("#show"+($deal+1)+"").show()
-		}
-		$('#uaccount').bind("input propertychange", function(){
-			cnext1()
-			sub();
-		});
-		$('#upassword').bind("input propertychange", function(){
-			cnext1()
-			sub();
-		});
-		$('#enupassword').bind("input propertychange", function(){
-			cnext1()
-			sub();
-		});
-		function cnext1(){
-			a = $('#uaccount').val()
-			b = $('#upassword').val()
-			c = $('#enupassword').val()
-			if( a.length>5 && b.length>5 && b==c)
-			{
-				$('#next1').removeAttr('disabled');
-			}
-			else{
-				$('#next1').attr("disabled",'disabled');
-			}
-		}
-
-		$('#umail').bind("input propertychange", function(){
-			cnext2()
-			sub();
-
-		});
-		$('#uphone').bind("input propertychange", function(){
-			cnext2()
-			sub();
-
-		});
-		$('#uqq').bind("input propertychange", function(){
-			cnext2()
-			sub();
-		});
-		$('#uwechat').bind("input propertychange", function(){
-			cnext2()
-			sub();
-		});
-		function cnext2(){
-			a = $('#uphone').val()
-			b = $('#uqq').val()
-			c = $('#uwechat').val()
-			d = $('#umail').val()
-			if( a.length==11 && b.length>4 && c.length>3 && d.length>5)
-			{
-				$('#next2').removeAttr('disabled');
-			}
-			else{
-				$('#next2').attr("disabled",'disabled');
-			}
-		}
-
-		$('#unamech').bind("input propertychange", function(){
-			cnext3()
-			sub();
-		});
-		$('#unameen').bind("input propertychange", function(){
-			cnext3()
-			sub();
-		});
-		function cnext3(){
-			a = $('#unamech').val()
-			b = $('#unameen').val()
-			if( a.length>0 && b.length>0)
-			{
-				$('#next3').removeAttr('disabled');
-			}
-			else{
-				$('#next3').attr("disabled",'disabled');
-			}
-		}
-
-		$('#cnamech1').bind("input propertychange", function(){
-			cnext4()
-			sub();
-		});
-		$('#cnameeg1').bind("input propertychange", function(){
-			cnext4()
-			sub();
-		});
-		$('#cnamech2').bind("input propertychange", function(){
-			cnext4()
-			sub();
-		});
-		$('#cnameeg2').bind("input propertychange", function(){
-			cnext4();
-			sub();
-		});
-		function cnext4(){
-			a = $('#cnamech1').val()
-			b = $('#cnameeg1').val()
-			c = $('#cnamech2').val()
-			d = $('#cnameeg2').val()
-			if( a.length>0 && b.length>0 && c.length>0 && d.length>0)
-			{
-				$('#next4').removeAttr('disabled');
-			}
-			else{
-				$('#next4').attr("disabled",'disabled');
-			}
-		}
-		$('#czipcode').bind("input propertychange", function(){
-			sub();
-		});
-		$('#addressch').bind("input propertychange", function(){
-			sub();
-		});
-		$('#addressen').bind("input propertychange", function(){
-			sub();
-		});
-		function sub(){
-			a1 = $('#uaccount').val()
-			a2 = $('#upassword').val()
-			a3 = $('#enupassword').val()
-			a4 = $('#umail').val()
-			a5 = $('#uphone').val()
-			a6 = $('#uqq').val()
-			a7 = $('#uwechat').val()
-			a8 = $('#unamech').val()
-			a9 = $('#unameen').val()
-			a10 = $('#cnamech1').val()
-			a11 = $('#cnameeg1').val()
-			a12 = $('#cnamech2').val()
-			a13 = $('#cnameeg2').val()
-			a14 = $('#czipcode').val()
-			a15 = $('#addressch').val()
-			a16 = $('#addressen').val()
-			if(a1.length>5 && a2.length>5 && a3==a2 && a4.length>5 &&a5.length==11 && a6.length>4 && a7.length>4 && a8.length>0&& a9.length>0&& a10.length>0&& a11.length>0&& a12.length>0&& a13.length>0&& a14.length>0&& a15.length>0&& a16.length>0)
-			{
-				$('#sub_form').removeAttr('disabled')
-			}
-			else{
-				$('#sub_form').attr('disabled','disabled')
-			}
-		}
-	</script> -->
+	<!-- <script></script> -->
 		<script>
 			var suc = new Array
 			for(j=0;j<10;j++)
@@ -832,10 +667,48 @@
 
 			//-----------------------------提交检测-------------------------------
 			function checkall(){
-				for(i=7;i<10;i++)
+				for(i=0;i<10;i++)
 				{
 					if(suc[i]==false)
 					{
+						if(i==0) 
+						{
+							show_warning('请检查用户名')
+							$('#username').focus()
+							break;
+						}
+						if(i==1) 
+						{
+							show_warning('请检查密码是否符合格式')
+							$('#upassword').focus()
+							break;
+						}
+						if(i==2) 
+						{
+							show_warning('两次密码不一致')
+							$('#enupassword').focus()
+							break;
+						}
+						if(i==3)
+						{
+							show_warning('请输入正确的姓氏')
+							break
+						}
+						if(i==4)
+						{
+							show_warning('请输入正确的名字')
+							break
+						}
+						if(i==5)
+						{
+							show_warning('Illegal Firstname (英文名不合法)')
+							break
+						}
+						if(i==6)
+						{
+							show_warning('Illegal Lastname (英文姓不合法)')
+							break
+						}
 						if(i==7)
 						{
 							show_warning('邮箱不满足条件')

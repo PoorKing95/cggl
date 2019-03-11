@@ -13,5 +13,6 @@ urlpatterns = [
     path('test/', views.test, name='test'),
     path('tables/', views.tables, name='tables'),
     path('check/', views.check, name='check'),
-    path('test1/', views.test1, name='test1')
+    path('test1/', views.test1, name='test1'),
+    path('basic-form/', views.basic, name='basic'),
 ]

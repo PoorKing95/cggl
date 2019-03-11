@@ -1,0 +1,41 @@
+<nav class="side-navbar">
+    <div class="sidebar-header d-flex align-items-center">
+        <div class="avatar"><img src="/static/img/timg.jpg" alt="..." class="img-fluid rounded-circle"></div>
+        <div class="title">
+            <h1 class="h4">您好,{{ request.session.namech }}</h1>
+        </div>
+    </div>
+    <hr>
+    <!-- Sidebar Navidation Menus-->
+    <ul class="list-unstyled">
+        <li class="active"> <a href="index.html"><i class="icon-home"></i>主页</a></li>
+        <li> <a href="{% url 'polls:add_step1' %}"> <i class="fa fa-file"></i>成果录入 </a></li>
+        <li><a href="#apps" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-user"></i>个人中心</a>
+            <ul id="apps" class="collapse list-unstyled">
+                <li><a href="calendar.html">完善信息</a></li> 
+                <li><a href="email.html">修改密码</a></li> 
+                <li><a href="media.html">信息管理</a></li> 
+            </ul>
+        </li>
+        
+        <li><a href="#forms" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-building-o"></i>图表</a>
+            <ul id="forms" class="collapse list-unstyled">
+                <li><a href="basic-form.html">暂未开通</a></li> 
+                <li><a href="form-layouts.html">暂未开通</a></li> 
+            </ul>
+        </li>
+        <li> <a href="maps.html"> <i class="fa fa-map-o"></i>暂未开通</a></li>
+        <li><a href="#pages" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-file-o"></i>文章</a>
+            <ul id="pages" class="collapse list-unstyled">
+                <li><a href="faq.html">暂未开通</a></li> 
+                <li><a href="empty.html">暂未开通</a></li> 
+                <li><a href="gallery.html">暂未开通</a></li> 
+                <li><a href="login.html">暂未开通</a></li> 
+                <li><a href="register.html">暂未开通</a></li> 
+                <li><a href="search-result.html">暂未开通</a></li> 
+                <li><a href="404.html">暂未开通</a></li> 
+            </ul>
+        </li>
+        <li > <a href="tables.html"> <i class="icon-grid"></i>暂未开通 </a></li> 
+    </ul><span class="heading">Extras</span>
+</nav>
