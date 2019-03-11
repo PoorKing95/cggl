@@ -98,3 +98,7 @@ ul.list li{
 .diy_front{
     color: #777777;
 }
+.select-warning{
+    border-color: red;
+    border-width: 2px;
+}

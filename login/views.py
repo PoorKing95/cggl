@@ -19,8 +19,28 @@ def index(request):
     return redirect('/tables/')
 
 def basic(request):
-    pass
-    return render(request, 'login/basic-form.html')
+    if request.session.get('is_login', None) == None:
+        return redirect('/login/')
+    else:
+        return render(request, 'login/basic-form.html')
+@csrf_exempt
+def finish(request):
+    username=request.session.get('user_name')
+    cnamech1 = request.POST.get('cnamech1')
+    cnameeg1 = request.POST.get('cnameeg1')
+    cnamech2 = request.POST.get('cnamech2')
+    cnameeg2 = request.POST.get('cnameeg2')
+    addressen = request.POST.get('addressen')
+    addressch = request.POST.get('addressch')
+    czipcode = request.POST.get('czipcode')
+    
+    lookfor = Company.objects.get(cnamech1='测试')
+    if lookfor:    
+        message='可以进行查找'
+    else:
+        message='不能进行查找'
+    return JsonResponse({'message':message})
+
 
 def test1(request):
     pass

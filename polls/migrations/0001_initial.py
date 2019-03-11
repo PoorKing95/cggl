@@ -2,7 +2,6 @@
 
 from django.db import migrations, models
 import django.db.models.deletion
-import login.models
 
 
 class Migration(migrations.Migration):
@@ -13,23 +12,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='account',
-            fields=[
-                ('uid', models.BigAutoField(primary_key=True, serialize=False)),
-                ('uaccount', models.CharField(max_length=100, unique=True)),
-                ('unamech', models.CharField(max_length=100)),
-                ('unameen', models.CharField(max_length=100)),
-                ('upassword', models.CharField(max_length=100)),
-                ('umail', models.CharField(max_length=100, unique=True)),
-                ('uphone', login.models.MyCharField(max_length=11)),
-                ('uqq', models.CharField(max_length=100, unique=True)),
-                ('uall', models.BooleanField()),
-            ],
-            options={
-                'db_table': 'user',
-            },
-        ),
         migrations.CreateModel(
             name='Author',
             fields=[
@@ -52,7 +34,7 @@ class Migration(migrations.Migration):
                 ('acid', models.BigAutoField(primary_key=True, serialize=False)),
                 ('acorder', models.SmallIntegerField()),
                 ('accurrent', models.BooleanField()),
-                ('author', models.ForeignKey(db_column='aid', on_delete=django.db.models.deletion.CASCADE, to='login.Author')),
+                ('author', models.ForeignKey(db_column='aid', on_delete=django.db.models.deletion.CASCADE, to='polls.Author')),
             ],
             options={
                 'db_table': 'author_company',
@@ -98,9 +80,9 @@ class Migration(migrations.Migration):
                 ('paorder', models.SmallIntegerField()),
                 ('pacommunication', models.BooleanField()),
                 ('pacorder', models.SmallIntegerField()),
-                ('author', models.ForeignKey(db_column='aid', on_delete=django.db.models.deletion.CASCADE, to='login.Author')),
-                ('company', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='login.Company')),
-                ('paper', models.ForeignKey(db_column='pid', on_delete=django.db.models.deletion.CASCADE, to='login.Paper')),
+                ('author', models.ForeignKey(db_column='aid', on_delete=django.db.models.deletion.CASCADE, to='polls.Author')),
+                ('company', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='polls.Company')),
+                ('paper', models.ForeignKey(db_column='pid', on_delete=django.db.models.deletion.CASCADE, to='polls.Paper')),
             ],
             options={
                 'db_table': 'paper_author',
@@ -109,6 +91,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='authorcompany',
             name='company',
-            field=models.ForeignKey(db_column='cid', on_delete=django.db.models.deletion.CASCADE, to='login.Company'),
+            field=models.ForeignKey(db_column='cid', on_delete=django.db.models.deletion.CASCADE, to='polls.Company'),
         ),
     ]

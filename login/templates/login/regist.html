@@ -675,39 +675,39 @@
 						{
 							show_warning('请检查用户名')
 							$('#username').focus()
-							break;
+							return false
 						}
 						if(i==1) 
 						{
 							show_warning('请检查密码是否符合格式')
 							$('#upassword').focus()
-							break;
+							return false
 						}
 						if(i==2) 
 						{
 							show_warning('两次密码不一致')
 							$('#enupassword').focus()
-							break;
+							return false
 						}
 						if(i==3)
 						{
 							show_warning('请输入正确的姓氏')
-							break
+							return false
 						}
 						if(i==4)
 						{
 							show_warning('请输入正确的名字')
-							break
+							return false
 						}
 						if(i==5)
 						{
 							show_warning('Illegal Firstname (英文名不合法)')
-							break
+							return false
 						}
 						if(i==6)
 						{
 							show_warning('Illegal Lastname (英文姓不合法)')
-							break
+							return false
 						}
 						if(i==7)
 						{
@@ -733,7 +733,6 @@
 				{
 					dealfen = tonameen($('#ufnameen').val())
 					deallen = tonameen($('#ulnameen').val())
-					alert(dealfen+''+deallen)
 					$.ajax({
 							type : 'POST',
 							url : "/regist/",

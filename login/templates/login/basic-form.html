@@ -51,30 +51,40 @@
                             <h3>完善信息：</h3>
                         </div>
                         <br>
-                        <form id="" method="POST" action="#" onsubmit="" >
+                        <form id="" method="POST" action="#" onsubmit="return sub_ajax()" >
+                            {% csrf_token %}
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1"><b>单位信息：</b></label>
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">一级单位中文名：</label>
-                                        <input type="text" class="form-control" id="" aria-describedby="emailHelp" 
+                                        <label for="exampleInputEmail1">一级单位中文名：
+                                            <span id='show1' class="alert-warning"></span>
+                                        </label>
+                                        <input type="text" class="form-control" id="cnamech1" aria-describedby="emailHelp" 
                                         placeholder="大学、科学院、研究所等机构">
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">University/Academy of sciences/research institution：</label>
-                                        <input type="text" class="form-control" id="" aria-describedby="emailHelp" 
+                                        <label for="exampleInputEmail1">University/Academy of sciences/research institution：
+                                            <span id='show2' class="alert-warning"></span>
+                                        </label>
+                                        <input type="text" class="form-control" id='cnameeg1' aria-describedby="emailHelp" 
                                         placeholder="please input your University/Academy of sciences/research institution">
+                                        <small class='alert-warning'>&nbsp;</small>
                                     </div>
                                     <div class="form-group">
-                                            <label for="exampleInputEmail1">二级单位中文名：</label>
-                                            <input type="text" class="form-control" id="" aria-describedby="emailHelp" 
+                                            <label for="exampleInputEmail1">二级单位中文名：
+                                                <span id='show3' class="alert-warning"></span>
+                                            </label>
+                                            <input type="text" class="form-control" id="cnamech2" aria-describedby="emailHelp" 
                                             placeholder="学院、部门等">
                                         </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">College/Department：</label>
-                                        <input type="text" class="form-control" id="" aria-describedby="emailHelp" 
+                                        <label for="exampleInputEmail1">College/Department：
+                                            <span id='show4' class="alert-warning"></span>
+                                        </label>
+                                        <input type="text" class="form-control" id="cnameeg2" aria-describedby="emailHelp" 
                                         placeholder="please input your College/Department">
                                     </div>
                                 </div>
@@ -83,7 +93,9 @@
                                         <label for="exampleInputEmail1"><b>单位地址：</b></label>
                                     </div>
                                 <div class="form-group">
-                                    <label for="country">国家(Country)</label>
+                                    <label for="country">国家(Country)
+                                        <span id='show5' class="alert-warning"></span>
+                                    </label>
                                     <select class="form-control" id="country">
                                         <option value="no" selected disabled>-=请选择/Select=-</option>
                                     </select>
@@ -91,43 +103,53 @@
                                 <div class="row" id='China_show'>
                                     <div class="form-group col-md-4">
                                         <label for="exampleSelect1">省/自治区/直辖市</label>
-                                        <select class="form-control" id="province">
+                                        <select class="form-control" id="province" >
                                             <option value="no" selected disabled>-=省/自治区/直辖市=-</option>
                                         </select>
+                                        <small id='show6' class='alert-warning'>&nbsp;</small>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="exampleSelect1">市</label>
                                         <select class="form-control" id="citys">
                                             <option value="no" selected disabled>-=市/区=-</option>
                                         </select>
+                                        <small id='show7' class='alert-warning'>&nbsp;</small>
+                                        <small> &nbsp;</small>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="exampleSelect1">区/县</label>
-                                        <select class="form-control" id="area">
+                                        <select class="form-control" id="area" >
                                             <option value="no" selected disabled>-=区/县=-</option>
                                         </select>
+                                        <small id='show8' class='alert-warning'>&nbsp;</small>
                                     </div>
                                     <div class="form-group col-md-12" >
-                                        <label for="exampleInputEmail1">详细地址</label>
-                                        <input type="text" class="form-control" id="" aria-describedby="emailHelp" 
+                                        <label for="exampleInputEmail1">详细地址
+                                            <span id='show9' class="alert-warning"></span>
+                                        </label>
+                                        <input type="text" class="form-control" id="addressch" aria-describedby="emailHelp" 
                                         placeholder="详细地址">
                                     </div>
                                 </div>
                                 <div class="form-group message_hidden" id='Other_show'>
-                                    <label for="exampleInputEmail1">Your institution's address</label>
-                                    <input type="text" class="form-control" id="" aria-describedby="emailHelp" 
+                                    <label for="exampleInputEmail1">Your institution's address
+                                        <span id='show10' class="alert-warning"></span>
+                                    </label>
+                                    <input type="text" class="form-control" id="addressen" aria-describedby="emailHelp" 
                                     placeholder="please input your College/Department">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">邮政编码(zip code)</label>
-                                    <input type="text" class="form-control" id="" aria-describedby="emailHelp" 
+                                    <label for="exampleInputEmail1">邮政编码(zip code)
+                                        <span id='show11' class="alert-warning"></span>
+                                    </label>
+                                    <input type="text"  class="form-control" id="czipcode" aria-describedby="emailHelp" 
                                     placeholder="邮政编码(zip code)">
                                 </div>
                                 </div>
                             </div> 
                             <div class="row">
                                 <div class="col-md-6 text-md-center text-sm-left"><button type="submit" class="btn btn-general btn-blue">提&nbsp;&nbsp;&nbsp;&nbsp;交</button></div>
-                                <div class="col-md-6 text-md-center text-sm-left"><button type="reset" class="btn btn-general btn-blue">取&nbsp;&nbsp;&nbsp;&nbsp;消</button></div>
+                                <div class="col-md-6 text-md-center text-sm-left"><button type="reset" class="btn btn-general btn-blue">重&nbsp;&nbsp;&nbsp;&nbsp;置</button></div>
                             </div>
                               
                         </form>
@@ -153,6 +175,328 @@
     <script src="/static/js/local-data.js"></script> 
     <script src="/static/js/local.js"></script> 
     <script>
+    
+    var suc = new Array
+    for (i=0;i<11;i++)
+        suc[i] = false
+    var c_cnamech1 = /^[\u4e00-\u9fa5]+$/
+    var c_czipcode = /^[a-zA-Z0-9`~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；‘’，。、]+$/
+    //这里写的是表单判空
+    $('#cnamech1').bind("input propertychange",function(){
+        cnamech1 = $(this).val()
+        if(!c_cnamech1.exec(cnamech1))
+        {
+            $('#show1').html('一级单位中文名不正确')
+            suc[0] = false
+        }
+        else
+        {
+            $('#show1').html('')
+            suc[0] = true
+        }
+    });
+    $('#cnameeg1').bind("input propertychange",function(){
+        cnameeg1 = $(this).val()
+        if(c_cnamech1.exec(cnameeg1))
+        {
+            $('#show2').html('Wrong name!')
+            suc[1] = false
+        }
+        else
+        {
+            $('#show2').html('')
+            suc[1] = true
+        }
+    });
+    $('#cnamech2').bind("input propertychange",function(){
+        cnamech1 = $(this).val()
+        if(!c_cnamech1.exec(cnamech1))
+        {
+            $('#show3').html('请输入正确的二级单位名称')
+            suc[2] = false
+        }
+        else
+        {
+            $('#show3').html('')
+            suc[2] = true
+        }
+    });
+    $('#cnameeg2').bind("input propertychange",function(){
+        cnameeg2 = $(this).val()
+        if(c_cnamech1.exec(cnameeg2))
+        {
+            $('#show4').html('Wrong name!')
+            suc[3] = false
+        }
+        else
+        {
+            $('#show4').html('')
+            suc[3] = true
+        }
+    });
+    $('#country').change(function(){
+        country = $(this).val()
+        if(country == 'no')
+            {
+                $('#show5').html('请选择国家/Please select country')
+                suc[4]=false
+            }
+        else
+            {
+                $('#show5').html('')
+                suc[4]=true
+            }
+    });
+    $('#province').click(function(){
+        province = $(this).val()
+        if(province == 'no')
+            {
+                $('#show6').html('请选择省级行政单位')
+                $('#province').addClass('select-warning')
+                suc[5]=false
+            }
+        else
+            {
+                $('#show6').html('')
+                $(this).removeClass('select-warning')
+                suc[5]=true
+            }
+    });
+    $('#citys').click(function(){
+        citys = $(this).val()
+        if(citys == 'no')
+            {
+                $('#show7').html('请选择地级行政单位')
+                $(this).addClass('select-warning')
+                suc[6]=false
+            }
+        else
+            {
+                $('#show7').html('')
+                $(this).removeClass('select-warning')
+                suc[6]=true
+            }
+    });
+    $('#area').click(function(){
+        area = $(this).val()
+        if(area == 'no')
+            {
+                $('#show8').html('请选择区级行政单位')
+                $(this).addClass('select-warning')
+                suc[7]=false
+            }
+        else
+            {
+                $('#show8').html('')
+                $(this).removeClass('select-warning')
+                suc[7]=true
+            }
+    });
+    $('#addressch').bind("input propertychange",function(){
+        addressch = $(this).val()
+        if(addressch='')
+        {
+            $('#show9').html('请输入您的详细地址')
+            suc[8]=false
+        }
+        else
+        {
+            $('#show9').html('')
+            suc[8]=true
+        }
+    });
+    $('#addressen').bind("input propertychange",function(){
+        addressen = $(this).val()
+        if(c_cnamech1.exec(addressen)||addressen=='')
+        {
+            $('#show10').html('Please input legal address')
+            suc[9]=false
+        }
+        else
+        {
+            $('#show10').html('')
+            suc[9]=true
+        }
+    });
+    $('#czipcode').bind("input propertychange",function(){
+        czipcode = $(this).val()
+        if(!c_czipcode.exec(czipcode))
+        {
+            $('#show11').html('邮编不合法/Please input legal zip code')
+            suc[10]=false
+        }
+        else
+        {
+            $('#show11').html('')
+            suc[10]=true
+        }
+    });
+    function sub_ajax(){
+        country = $('#country').val()
+        if(country == '中国'||country == null||country == 'no')
+        {
+            for(i=0;i<suc.length;i++)
+            {
+                if(i==9)
+                    continue;
+                else
+                {
+                    if(suc[i]==false)
+                    {
+                        if(i==0)
+                        {
+                            $("#show"+(i+1)+"").html('一级单位名非法')
+                            return false
+                        }
+                        if(i==1)
+                        {
+                            $("#show"+(i+1)+"").html('illegal value')
+                            return false
+                        }
+                        if(i==2)
+                        {
+                            $("#show"+(i+1)+"").html('二级单位名非法')
+                            return false
+                        }
+                        if(i==3)
+                        {
+                            $("#show"+(i+1)+"").html('illegal value')
+                            return false
+                        }
+                        if(i==4)
+                        {
+                            $("#show"+(i+1)+"").html('请选择国家')
+                             return false
+                        }
+                        if(i==5)
+                        {
+                            $("#show"+(i+1)+"").html('请选择省级行政单位')
+                            $('#province').addClass('select-warning')
+                            return false
+                        }
+                        if(i==6)
+                        {
+                            $("#show"+(i+1)+"").html('请选择地级行政单位')
+                            $('#citys').addClass('select-warning')
+                            return false
+                        }
+                        if(i==7)
+                        {
+                            $("#show"+(i+1)+"").html('请选择区级行政单位')
+                            $('#area').addClass('select-warning')
+                            return false
+                        }
+                        if(i==8)
+                        {
+                            $("#show"+(i+1)+"").html('请输入详细地址')
+                            return false
+                        }
+                        if(i==10)
+                        {
+                            $("#show"+(i+1)+"").html('邮编不合法/illegal value')
+                            return false
+                        }
+                    }
+                }
+            }
+            if(i==11)
+            {
+                $.ajax({
+                    type : 'POST',
+                    url : "/finish/",
+                    dataType : 'json',
+                    data:{
+                        'cnamech1': $('#cnamech1').val(),
+                        'cnameeg1': $('#cnameeg1').val(),
+                        'cnamech2': $('#cnamech2').val(),
+                        'cnameeg2': $('#cnameeg2').val(),
+                        'addressch': $('#country').val()+$('#citys').val()+$('#area').val()+$('#addressch').val(),
+                        'czipcode': $('#czipcode').val()
+                    },
+                    success: function(ret){
+                        alert(ret.message)
+                        
+                    }
+                });
+                return false
+            }
+        }
+        else
+        {
+            for(i=0;i<suc.length;i++)
+            {
+                if(i==5||i==6||i==7||i==8)
+                    continue;
+                else
+                {
+                    if(suc[i]==false)
+                    {
+                        if(i==0)
+                        {
+                            $("#show"+(i+1)+"").html('一级单位名非法')
+                            return false
+                        }
+                        if(i==1)
+                        {
+                            $("#show"+(i+1)+"").html('illegal value')
+                            return false
+                        }
+                        if(i==2)
+                        {
+                            $("#show"+(i+1)+"").html('二级单位名非法')
+                            return false
+                        }
+                        if(i==3)
+                        {
+                            $("#show"+(i+1)+"").html('illegal value')
+                            return false
+                        }
+                        if(i==4)
+                        {
+                            $("#show"+(i+1)+"").html('请选择国家')
+                             return false
+                        }
+                        if(i==9)
+                        {
+                            $("#show"+(i+1)+"").html('Please input legal address')
+                            return false
+                        }
+                        if(i==10)
+                        {
+                            $("#show"+(i+1)+"").html('邮编不合法/illegal value')
+                            return false
+                        }
+                    }
+                }
+            }
+            if(i==11)
+            {
+                $.ajax({
+                    type : 'POST',
+                    url : "/finish/",
+                    dataType : 'json',
+                    data:{
+                        'cnamech1': $('#cnamech1').val(),
+                        'cnameeg1': $('#cnameeg1').val(),
+                        'cnamech2': $('#cnamech2').val(),
+                        'cnameeg2': $('#cnameeg2').val(),
+                        'addressch': '',
+                        'addressen': $('#addressen').val(),
+                        'czipcode': $('#czipcode').val()
+                    },
+                    success: function(ret){
+                        show_warning(ret.message)
+                        return false
+                        if(ret.message=='')
+                            suc[0]=true
+                        else
+                            suc[0]=false
+                    }
+                });
+            }
+        }
+    }
+    
     $(function(){
         for(i=0;i<country.data.length;i++)
             $('#country').append("<option value="+country.data[i]+">"+country.data[i]+"</option>")
