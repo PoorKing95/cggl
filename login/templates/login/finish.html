@@ -1,0 +1,218 @@
+
+<!-- 用于论文的信息录入 -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+
+    <title>成果管理系统</title>
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+    
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/font-icon-style.css">
+    <link rel="stylesheet" href="/static/css/style.default.css" id="theme-stylesheet">
+
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="/static/css/form.css">
+    <link rel="stylesheet" href="/static/css/pages/login.css">
+</head>
+
+<body>
+        
+<!--====================================================
+                     MAIN NAVBAR
+======================================================-->
+{% if not request.session.uall %}
+{% include 'login/base-uall.html' %}
+{% else %}
+{% include 'login/base.html' %}
+{% endif %}
+
+<!--====================================================
+                    PAGE CONTENT
+======================================================-->
+    <div class="page-content d-flex align-items-stretch">
+       
+        <!--***** SIDE NAVBAR *****-->
+        {% if not request.session.uall %}
+        {% include 'login/base1-uall.html' %}
+        {% else %}
+        {% include 'login/base1.html' %}
+        {% endif %}
+        <div class="content-inner form-cont">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <!--***** BASIC FORM *****-->
+                    <div class="card form" id="form1">
+                        <div class="card-header">
+                            <h3>信息已经完善，无需进行完善工作</h3>
+                            
+                        </div>
+                        <br>
+                        <form >
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1"><b>单位信息：</b></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">一级单位中文名：
+                                            <span id='show1' class="alert-warning"></span>
+                                        </label>
+                                        <input type="text" disabled class="form-control" id="cnamech1" aria-describedby="emailHelp" 
+                                        placeholder="大学、科学院、研究所等机构">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">University/Academy of sciences/research institution：
+                                            <span id='show2' class="alert-warning"></span>
+                                        </label>
+                                        <input type="text" disabled class="form-control" id='cnameeg1' aria-describedby="emailHelp" 
+                                        placeholder="please input your University/Academy of sciences/research institution">
+                                        <small class='alert-warning'>&nbsp;</small>
+                                    </div>
+                                    <div class="form-group">
+                                            <label for="exampleInputEmail1">二级单位中文名：
+                                                <span id='show3' class="alert-warning"></span>
+                                            </label>
+                                            <input type="text" disabled class="form-control" id="cnamech2" aria-describedby="emailHelp" 
+                                            placeholder="学院、部门等">
+                                        </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">College/Department：
+                                            <span id='show4' class="alert-warning"></span>
+                                        </label>
+                                        <input type="text" disabled class="form-control" id="cnameeg2" aria-describedby="emailHelp" 
+                                        placeholder="please input your College/Department">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1"><b>单位地址：</b></label>
+                                    </div>
+                                <div class="form-group">
+                                    <label for="country">国家(Country)
+                                        <span id='show5' class="alert-warning"></span>
+                                    </label>
+                                    <select class="form-control" disabled id="country">
+                                        <option value="no" selected disabled>-=请选择/Select=-</option>
+                                    </select>
+                                </div>
+                                <div class="row" id='China_show'>
+                                    <div class="form-group col-md-4">
+                                        <label for="exampleSelect1">省/自治区/直辖市</label>
+                                        <select class="form-control" disabled id="province" >
+                                            <option value="no" selected disabled>-=省/自治区/直辖市=-</option>
+                                        </select>
+                                        <small id='show6' class='alert-warning'>&nbsp;</small>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="exampleSelect1">市</label>
+                                        <select class="form-control" disabled id="citys">
+                                            <option value="no" selected disabled>-=市/区=-</option>
+                                        </select>
+                                        <small id='show7' class='alert-warning'>&nbsp;</small>
+                                        <small> &nbsp;</small>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="exampleSelect1">区/县</label>
+                                        <select class="form-control" disabled id="area" >
+                                            <option value="no" selected disabled>-=区/县=-</option>
+                                        </select>
+                                        <small id='show8' class='alert-warning'>&nbsp;</small>
+                                    </div>
+                                    <div class="form-group col-md-12" >
+                                        <label for="exampleInputEmail1">详细地址
+                                            <span id='show9' class="alert-warning"></span>
+                                        </label>
+                                        <input type="text" disabled class="form-control" id="addressch" aria-describedby="emailHelp" 
+                                        placeholder="详细地址">
+                                    </div>
+                                </div>
+                                <div class="form-group message_hidden" id='Other_show'>
+                                    <label for="exampleInputEmail1">Your institution's address
+                                        <span id='show10'  class="alert-warning"></span>
+                                    </label>
+                                    <input type="text" disabled class="form-control" id="addressen" aria-describedby="emailHelp" 
+                                    placeholder="please input your College/Department">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">邮政编码(zip code)
+                                        <span id='show11' class="alert-warning"></span>
+                                    </label>
+                                    <input type="text" disabled  class="form-control" id="czipcode" aria-describedby="emailHelp" 
+                                    placeholder="邮政编码(zip code)">
+                                </div>
+                                </div>
+                            </div> 
+                            <div class="row">
+                                <div class="col-md-6 text-md-center text-sm-left"><button type="submit" disabled class="btn btn-general btn-blue">提&nbsp;&nbsp;&nbsp;&nbsp;交</button></div>
+                                <div class="col-md-6 text-md-center text-sm-left"><button type="reset" disabled class="btn btn-general btn-blue">重&nbsp;&nbsp;&nbsp;&nbsp;置</button></div>
+                            </div>
+                              
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+   
+    
+    <!--Global Javascript -->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/popper/popper.min.js"></script>
+    <script src="/static/js/tether.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.cookie.js"></script>
+    <script src="/static/js/jquery.validate.min.js"></script>
+    <script src="/static/js/chart.min.js"></script> 
+    <script src="/static/js/front.js"></script> 
+    <!--Core Javascript -->
+    <script src="/static/js/local-data.js"></script> 
+    <script src="/static/js/local.js"></script> 
+    <script>
+    $(function(){
+        $('#leftmenu').children().eq(2).css('background-color','rgb(211, 229, 236)')
+        $('#apps').children().eq(0).addClass("active")
+    });
+    new Chart(document.getElementById("myChart-nav").getContext('2d'), {
+        type: 'doughnut',
+        data: {
+        labels: ["M", "T", "W", "T", "F", "S", "S"],
+        datasets: [{
+            backgroundColor: [
+            "#2ecc71",
+            "#3498db",
+            "#95a5a6",
+            "#9b59b6",
+            "#f1c40f",
+            "#e74c3c",
+            "#34495e"
+            ],
+            data: [12, 19, 3, 17, 28, 24, 7]
+        }]
+        },
+        options: {
+            legend: { display: false },
+            title: {
+            display: true,
+            text: ''
+            } 
+        }
+    });
+    </script>
+</body>
+
+</html>

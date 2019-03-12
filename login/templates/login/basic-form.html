@@ -31,7 +31,11 @@
 <!--====================================================
                      MAIN NAVBAR
 ======================================================-->
-    {% include 'login/base.html' %}
+{% if not request.session.uall %}
+{% include 'login/base-uall.html' %}
+{% else %}
+{% include 'login/base.html' %}
+{% endif %}
 
 <!--====================================================
                     PAGE CONTENT
@@ -39,8 +43,11 @@
     <div class="page-content d-flex align-items-stretch">
        
         <!--***** SIDE NAVBAR *****-->
+        {% if not request.session.uall %}
+        {% include 'login/base1-uall.html' %}
+        {% else %}
         {% include 'login/base1.html' %}
-
+        {% endif %}
         <div class="content-inner form-cont">
             <div class="row">
                 <div class="col-md-12">
@@ -51,7 +58,7 @@
                             <h3>完善信息：</h3>
                         </div>
                         <br>
-                        <form id="" method="POST" action="#" onsubmit="return sub_ajax()" >
+                        <form id=""   onsubmit="return sub_ajax()" >
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-md-6">
@@ -410,12 +417,20 @@
                         'cnameeg1': $('#cnameeg1').val(),
                         'cnamech2': $('#cnamech2').val(),
                         'cnameeg2': $('#cnameeg2').val(),
-                        'addressch': $('#country').val()+$('#citys').val()+$('#area').val()+$('#addressch').val(),
+                        'addressen':'',
+                        'addressch': $('#country').val()+$('#province').val()+$('#citys').val()+$('#area').val()+$('#addressch').val(),
                         'czipcode': $('#czipcode').val()
                     },
                     success: function(ret){
-                        alert(ret.message)
-                        
+                        if(ret.suc == 'timeout')
+                            window.location.href="/login/"
+                        if(ret.suc == 'yes')
+                            window.location.href="/tables/"
+                        if(ret.suc == 'no')
+                        {
+                            alert(ret.message)
+                            window.location.href="/logout/"
+                        }    
                     }
                 });
                 return false
@@ -481,54 +496,60 @@
                         'cnamech2': $('#cnamech2').val(),
                         'cnameeg2': $('#cnameeg2').val(),
                         'addressch': '',
-                        'addressen': $('#addressen').val(),
+                        'addressen': $('#country').val()+$('#addressen').val(),
                         'czipcode': $('#czipcode').val()
                     },
                     success: function(ret){
-                        show_warning(ret.message)
-                        return false
-                        if(ret.message=='')
-                            suc[0]=true
-                        else
-                            suc[0]=false
+                        if(ret.suc == 'timeout')
+                            window.location.href="/login/"
+                        if(ret.suc == 'yes')
+                            window.location.href="/tables/"
+                        if(ret.suc == 'no')
+                        {
+                            alert(ret.message)
+                            window.location.href="/logout/"
+                        }
                     }
                 });
+                return false
             }
         }
     }
     
     $(function(){
+        $('#leftmenu').children().eq(2).css('background-color','rgb(211, 229, 236)')
+        $('#apps').children().eq(0).addClass("active")
         for(i=0;i<country.data.length;i++)
             $('#country').append("<option value="+country.data[i]+">"+country.data[i]+"</option>")
         for(i=0;i<local.length;i++)
             $('#province').append("<option value="+local[i].province+" >"+local[i].province+"</option>")
         
     });
-    new Chart(document.getElementById("myChart-nav").getContext('2d'), {
-        type: 'doughnut',
-        data: {
-        labels: ["M", "T", "W", "T", "F", "S", "S"],
-        datasets: [{
-            backgroundColor: [
-            "#2ecc71",
-            "#3498db",
-            "#95a5a6",
-            "#9b59b6",
-            "#f1c40f",
-            "#e74c3c",
-            "#34495e"
-            ],
-            data: [12, 19, 3, 17, 28, 24, 7]
-        }]
-        },
-        options: {
-            legend: { display: false },
-            title: {
-            display: true,
-            text: ''
-            } 
-        }
-    });
+    // new Chart(document.getElementById("myChart-nav").getContext('2d'), {
+    //     type: 'doughnut',
+    //     data: {
+    //     labels: ["M", "T", "W", "T", "F", "S", "S"],
+    //     datasets: [{
+    //         backgroundColor: [
+    //         "#2ecc71",
+    //         "#3498db",
+    //         "#95a5a6",
+    //         "#9b59b6",
+    //         "#f1c40f",
+    //         "#e74c3c",
+    //         "#34495e"
+    //         ],
+    //         data: [12, 19, 3, 17, 28, 24, 7]
+    //     }]
+    //     },
+    //     options: {
+    //         legend: { display: false },
+    //         title: {
+    //         display: true,
+    //         text: ''
+    //         } 
+    //     }
+    // });
     </script>
 </body>
 

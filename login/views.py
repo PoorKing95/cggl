@@ -23,9 +23,54 @@ def basic(request):
         return redirect('/login/')
     else:
         return render(request, 'login/basic-form.html')
+
+def finished(request):
+    if request.session.get('is_login', None) == None:
+        return redirect('/login/')
+    else:
+        return render(request, 'login/finish.html')
+
+def changepwd(request):
+    if request.session.get('is_login', None) == None:
+        return redirect('/login/')
+    else:
+        return render(request, 'login/changepwd.html')
+@csrf_exempt
+def updatepwd1(request):
+    username=request.session.get('user_name')
+    inmail = request.POST.get('inmail')
+    inqq = request.POST.get('inqq')
+    inphone = request.POST.get('inphone')
+    if request.session.get('is_login', None) == None:
+        message = {'message':'非法','suc':'timeout'}
+    else:
+        lookfor = account.objects.filter(uaccount = username,umail=inmail,uqq=inqq,uphone=inphone)
+        if lookfor:
+            message = {'message':'有','suc':'yes'}
+        else:
+            message = {'message':'请核实您的信息是否正确','suc':'no'}
+    return JsonResponse(message)
+@csrf_exempt
+def updatepwd2(request):
+    username=request.session.get('user_name')
+    oldpwd = request.POST.get('oldpwd')
+    newpwd = request.POST.get('newpwd')
+    oldpwd = md5_key(oldpwd)
+    newpwd = md5_key(newpwd)
+    if request.session.get('is_login', None) == None:
+        message = {'message':'非法','suc':'timeout'}
+    else:
+        lookfor = account.objects.filter(uaccount = username,upassword=oldpwd)
+        if lookfor:
+            account.objects.filter(uaccount = username).update(upassword=newpwd)
+            message = {'message':'修改密码成功，请重新登陆','suc':'yes'}
+        else:
+            message = {'message':'您输入的旧密码有误，请核实','suc':'no'}
+    return JsonResponse(message)
+
 @csrf_exempt
 def finish(request):
-    username=request.session.get('user_name')
+    usermail=request.session.get('user_mail')
     cnamech1 = request.POST.get('cnamech1')
     cnameeg1 = request.POST.get('cnameeg1')
     cnamech2 = request.POST.get('cnamech2')
@@ -33,13 +78,32 @@ def finish(request):
     addressen = request.POST.get('addressen')
     addressch = request.POST.get('addressch')
     czipcode = request.POST.get('czipcode')
-    
-    lookfor = Company.objects.get(cnamech1='测试')
-    if lookfor:    
-        message='可以进行查找'
+    if request.session.get('is_login', None) == None:
+        message = {'message':'非法','suc':'timeout'}
     else:
-        message='不能进行查找'
-    return JsonResponse({'message':message})
+        try:
+            lookfor = Company.objects.filter(cnamech1=cnamech1,cnamech2=cnamech2,cnameeg1=cnameeg1,cnameeg2=cnameeg2,addressch=addressch,addressen=addressen,czipcode=czipcode)
+            if lookfor:
+                lookfor1 = Company.objects.get(cnamech1=cnamech1,cnamech2=cnamech2,cnameeg1=cnameeg1,cnameeg2=cnameeg2,addressch=addressch,addressen=addressen,czipcode=czipcode)
+                findaid = Author.objects.get(amail = usermail)
+                new_ac = AuthorCompany(acorder=1,accurrent=True,author=findaid,company=lookfor1)
+                new_ac.save()
+                account.objects.filter(umail = usermail).update(uall = True)
+                request.session['uall'] = True
+                message = {'message':'已有插入成功','suc':'yes'}
+            else:
+                new_com = Company(cnamech1=cnamech1,cnamech2=cnamech2,cnameeg1=cnameeg1,cnameeg2=cnameeg2,addressch=addressch,addressen=addressen,czipcode=czipcode)
+                new_com.save()
+                findcid = Company.objects.get(cnamech1=cnamech1,cnamech2=cnamech2,cnameeg1=cnameeg1,cnameeg2=cnameeg2,addressch=addressch,addressen=addressen,czipcode=czipcode)
+                findaid = Author.objects.get(amail = usermail)
+                new_ac = AuthorCompany(acorder=1,accurrent=True,author=findaid,company=findcid)
+                new_ac.save()
+                account.objects.filter(umail = usermail).update(uall = True)
+                request.session['uall'] = True
+                message = {'message':'新建插入成功','suc':'yes'}
+        except:
+            message = {'message':'服务器内部错误','suc':'no'}
+    return JsonResponse(message)
 
 
 def test1(request):

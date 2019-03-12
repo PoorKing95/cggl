@@ -7,13 +7,13 @@
     </div>
     <hr>
     <!-- Sidebar Navidation Menus-->
-    <ul class="list-unstyled" id="leftmenu">
-        <li> <a href="/index/"><i class="icon-home"></i>主页</a></li>
-        <li> <a href="{% url 'polls:add_step1' %}"> <i class="fa fa-file"></i>成果录入 </a></li>
+    <ul class="list-unstyled">
+        <li class="active"> <a href="/tables/"><i class="icon-home"></i>主页</a></li>
+        <li> <a href="#"> <i class="fa fa-file"></i>成果录入 </a></li>
         <li><a href="#apps" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-user"></i>个人中心</a>
             <ul id="apps" class="collapse list-unstyled">
-                <li><a href="/havefinished/">完善信息</a></li> 
-                <li><a href="/changepwd/">修改密码</a></li> 
+                <li><a href="/basic-form/">完善信息</a></li> 
+                <li><a href="#">修改密码</a></li> 
                 <li><a href="#">暂未开通</a></li> 
             </ul>
         </li>

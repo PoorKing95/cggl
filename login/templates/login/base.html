@@ -10,7 +10,7 @@
             <div class="container-fluid ">
                 <div class="navbar-holder d-flex align-items-center justify-content-between">
                     <div class="navbar-header">
-                        <a href="index.html" class="navbar-brand">
+                        <a href="#" class="navbar-brand">
                             <div class="brand-text brand-big hidden-lg-down"><img src="/static/img/logo-white.png" alt="Logo" class="img-fluid"></div>
                             <div class="brand-text brand-small"><img src="/static/img/logo-icon.png" alt="Logo" class="img-fluid"></div>
                         </a>
@@ -33,21 +33,14 @@
                                 <hr>
                             </li>
                             <li>
-                                <a rel="nofollow" href="profile.html" class="dropdown-item">
+                                <a rel="nofollow" href="/changepwd/" class="dropdown-item">
                                     <div class="notification">
                                         <div class="notification-content" style="margin-left: 30px;"><i class="fa fa-user "></i>用户中心</div>
                                     </div>
                                 </a>
                             </li>
                             <li>
-                                <a rel="nofollow" href="profile.html" class="dropdown-item">
-                                    <div class="notification">
-                                        <div class="notification-content" style="margin-left: 30px;"><i class="fa fa-file"></i>论文中心</div> 
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a rel="nofollow" href="profile.html" class="dropdown-item">
+                                <a rel="nofollow" href="{% url 'polls:add_step1' %}" class="dropdown-item">
                                     <div class="notification">
                                         <div class="notification-content" style="margin-left: 30px;"><i class="fa fa-hand-paper-o"></i>提交论文</div>
                                     </div>
@@ -65,7 +58,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item d-flex align-items-center"><a id="menu-toggle-right" class="nav-link" href="#"><i class="fa fa-bars"></i></a></li>
+                    
                 </ul> 
             </div>
         </nav>

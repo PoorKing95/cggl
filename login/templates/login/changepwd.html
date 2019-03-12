@@ -1,0 +1,357 @@
+
+<!-- 用于论文的信息录入 -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+
+    <title>成果管理系统</title>
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+    
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/font-icon-style.css">
+    <link rel="stylesheet" href="/static/css/style.default.css" id="theme-stylesheet">
+
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="/static/css/form.css">
+    <link rel="stylesheet" href="/static/css/pages/login.css">
+</head>
+
+<body>
+        
+<!--====================================================
+                     MAIN NAVBAR
+======================================================-->
+{% if not request.session.uall %}
+{% include 'login/base-uall.html' %}
+{% else %}
+{% include 'login/base.html' %}
+{% endif %}
+
+<!--====================================================
+                    PAGE CONTENT
+======================================================-->
+    <div class="page-content d-flex align-items-stretch">
+       
+        <!--***** SIDE NAVBAR *****-->
+        {% if not request.session.uall %}
+        {% include 'login/base1-uall.html' %}
+        {% else %}
+        {% include 'login/base1.html' %}
+        {% endif %}
+        <div class="content-inner form-cont">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <!--***** BASIC FORM *****-->
+                    <div class="card form" id="form1">
+                        <div class="card-header">
+                            <h3>修改密码：</h3>
+                        </div>
+                        <br>
+                        <form id='eninfo'>
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1"><b>确认信息：</b></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">注册邮箱：
+                                            <span id='show1' class="alert-warning"></span>
+                                        </label>
+                                        <input type="text" class="form-control" id="inmail" 
+                                        placeholder="examp@mail.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">注册QQ：
+                                            <span id='show2' class="alert-warning"></span>
+                                        </label>
+                                        <input name='inqq' id="inqq" onKeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))" type="number" class="form-control"  
+                                        placeholder="请输入注册时填写的qq号">
+                                    </div>
+                                    <div class="form-group">
+                                            <label for="exampleInputEmail1">注册手机号：
+                                                <span id='show3' class="alert-warning"></span>
+                                            </label>
+                                            <input onKeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))" type="number" name='uphone' class="form-control" id="inphone"
+                                             placeholder="请输入注册时填写的手机号">
+                                        </div>
+                                    <div class="form-group">
+                                        <button id='check-info' type="button" class="btn btn-general btn-blue">核实信息</button>
+                                    </div>
+                                </div>
+                        
+                                <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1"><b>修改密码：</b><small>请先核实信息再修改密码</small></label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">原密码：
+                                        <span id='show4' class="alert-warning"></span>
+                                    </label>
+                                    <input type="password" placeholder="请输入原密码" disabled class="form-control" name="oldpwd" id="oldpwd" aria-describedby="emailHelp">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">新密码：
+                                        <span id='show5' class="alert-warning"></span>
+                                    </label>
+                                    <input type="password" placeholder="请输入新密码" disabled class="form-control" name="newpwd" id="newpwd" aria-describedby="emailHelp">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">原密码：
+                                        <span id='show6' class="alert-warning"></span>
+                                    </label>
+                                    <input type="password" placeholder="确认新密码" disabled class="form-control" name="enpwd" id="enpwd" aria-describedby="emailHelp">
+                                </div>
+                                <div class="form-group">
+                                    <button id='sub-pwd' disabled type="button" class="btn btn-general btn-blue">提交信息</button>
+                                </div>
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+   
+    
+    <!--Global Javascript -->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/popper/popper.min.js"></script>
+    <script src="/static/js/tether.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.cookie.js"></script>
+    <script src="/static/js/jquery.validate.min.js"></script>
+    <script src="/static/js/chart.min.js"></script> 
+    <script src="/static/js/front.js"></script> 
+    <!--Core Javascript -->
+    <script src="/static/js/local-data.js"></script> 
+    <script src="/static/js/local.js"></script> 
+    <script>
+        $(function(){
+            $('#leftmenu').children().eq(2).css('background-color','rgb(211, 229, 236)')
+            $('#apps').children().eq(1).addClass("active")
+        })
+        var suc = new Array
+        for(i=0;i<6;i++)
+            suc[i]=false
+        var c_umail = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/ //邮箱格式。
+        var c_uqq = /^[1-9]\d{4,10}$/ //qq正则表达式
+        var c_uphone = /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/ //最新的手机格式
+        var c_password= /^([a-zA-Z0-9]|[_]){6,20}$/ //密码是6-20位，不能有除_以外的特殊字符
+        
+        
+        $('#oldpwd').bind("input propertychange",function(){
+            oldpwd = $(this).val()
+            if(!c_password.exec(oldpwd))
+            {
+                $('#show4').html('您输入的密码格式不正确')
+                suc[3]=false
+            }
+            else
+            {
+                $('#show4').html('')
+                suc[3]=true
+            }
+        })
+        $('#newpwd').bind("input propertychange",function(){
+            newpwd = $(this).val()
+            if(!c_password.exec(newpwd))
+            {
+                $('#show5').html('您输入的密码格式不正确')
+                suc[4]=false
+            }
+            else
+            {
+                if($('#enpwd').val()!=newpwd && $('#enpwd').val()!='')
+                {
+                    $('#show6').html('两次密码输入不一致')
+                    suc[4]=false
+                }
+                else
+                {
+                    $('#show5').html('')
+                    suc[4]=true
+                }
+            }
+        })
+        $('#enpwd').bind("input propertychange",function(){
+            enpwd = $(this).val()
+            if(enpwd!=$('#newpwd').val())
+            {
+                $('#show6').html('两次密码输入不一致')
+                suc[5]=false
+            }
+            else
+            {
+                $('#show6').html('')
+                suc[5]=true
+            }
+        })
+        $('#sub-pwd').click(function(){
+            for(i=3;i<6;i++)
+            {
+                if(suc[i]==false)
+                {
+                    if(i==3)
+                    {
+                        $('#show4').html('您输入的密码格式不正确')
+                        break;
+                    }
+                    if(i==4)
+                    {
+                        $('#show5').html('您输入的密码格式不正确')
+                        break;
+                    }
+                    if(i==5)
+                    {
+                        $('#show6').html('两次密码输入不一致')
+                        break;
+                    }
+                }
+            }
+            if(i==6)
+            {
+                $.ajax({
+                    type : 'POST',
+                    url : "/updatepwd2/",
+                    dataType : 'json',
+                    data:{
+                        'oldpwd': $('#oldpwd').val(),
+                        'newpwd': $('#newpwd').val(),
+                        'enpwd':$('#enpwd').val()
+                    },
+                    success: function(ret){
+                        if(ret.suc=='timeout')
+                            window.location.href="/login/"
+                        if(ret.suc=='no')
+                        {
+                            alert(ret.message)
+                        }
+                        if(ret.suc=='yes')
+                        {
+                            alert(ret.message)
+                            window.location.href="/logout/"
+                        }
+                    }
+                });
+            }
+        })
+
+        
+        $('#inmail').bind("input propertychange",function(){
+            inmail = $(this).val()
+            if(!c_umail.exec(inmail))
+            {
+                $('#show1').html('您输入的邮箱格式不正确')
+                suc[0]=false
+            }
+            else
+            {
+                $('#show1').html('')
+                suc[0]=true
+            }
+        })
+       
+        $('#inqq').bind("input propertychange",function(){
+            inqq = $(this).val()
+            if(!c_uqq.exec(inqq))
+            {
+                $('#show2').html('您输入的qq号格式不正确')
+                suc[1]=false
+            }
+            else
+            {
+                $('#show2').html('')
+                suc[1]=true
+            }
+        })
+        $('#inphone').bind("input propertychange",function(){
+            inphone = $(this).val()
+            if(!c_uphone.exec(inphone))
+            {
+                $('#show3').html('您输入的手机格式不正确')
+                suc[2]=false
+            }
+            else
+            {
+                $('#show3').html('')
+                suc[2]=true
+            }
+        })
+        $('#check-info').click(function(){
+            for(i=0;i<3;i++)
+            {
+                if(suc[i]==false)
+                {
+                    if(i==0)
+                    {
+                        $('#show1').html('您输入的邮箱格式不正确')
+                        break;
+                    }
+                    if(i==1)
+                    {
+                        $('#show2').html('您输入的qq格式不正确')
+                        break;
+                    }
+                    if(i==2)
+                    {
+                        $('#show3').html('您输入的手机格式不正确')
+                        break;
+                    }
+                }
+            }
+            if (i==3)
+            {
+                $.ajax({
+                    type : 'POST',
+                    url : "/updatepwd1/",
+                    dataType : 'json',
+                    data:{
+                        'inmail': $('#inmail').val(),
+                        'inqq': $('#inqq').val(),
+                        'inphone':$('#inphone').val()
+                    },
+                    success: function(ret){
+                        if(ret.suc=='timeout')
+                            window.location.href="/login/"
+                        if(ret.suc=='no')
+                        {
+                            $("#oldpwd").attr("disabled","disabled");
+                            $("#newpwd").attr("disabled","disabled");
+                            $("#enpwd").attr("disabled","disabled");
+                            $("#sub-pwd").attr("disabled","disabled");
+                            alert(ret.message)
+                        }
+                        if(ret.suc=='yes')
+                        {
+                            $("#inmail").attr("disabled","disabled");
+                            $("#inqq").attr("disabled","disabled");
+                            $("#inphone").attr("disabled","disabled");
+                            $("#oldpwd").removeAttr("disabled");
+                            $("#newpwd").removeAttr("disabled");
+                            $("#enpwd").removeAttr("disabled");
+                            $("#sub-pwd").removeAttr("disabled");
+                            alert('请修改密码')
+                        }
+                    }
+                });
+            }
+        })
+    </script>
+</body>
+
+</html>
