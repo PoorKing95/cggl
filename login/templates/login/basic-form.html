@@ -484,8 +484,42 @@
                     }
                 }
             }
+            // if(i==11)
+            // {
+            //     var countryen = countryen.data[$("#country").get(0).selectedIndex-1]
+            //     alert(countryen)
+                // $.ajax({
+                //     type : 'POST',
+                //     url : "/finish/",
+                //     dataType : 'json',
+                //     data:{
+                //         'cnamech1': $('#cnamech1').val(),
+                //         'cnameeg1': $('#cnameeg1').val(),
+                //         'cnamech2': $('#cnamech2').val(),
+                //         'cnameeg2': $('#cnameeg2').val(),
+                //         'addressch': '',
+                //         'addressen': countryen+$('#addressen').val(),
+                //         'czipcode': $('#czipcode').val()
+                //     },
+                //     success: function(ret){
+                //         alert(ret.message)
+                //         if(ret.suc == 'timeout')
+                //             window.location.href="/login/"
+                //         if(ret.suc == 'yes')
+                //             window.location.href="/tables/"
+                //         if(ret.suc == 'no')
+                //         {
+                //             alert(ret.message)
+                //             window.location.href="/logout/"
+                //         }
+                //     }
+                // });
+            //     return false;
+            // }
             if(i==11)
             {
+                
+                var enc = countryen.data[$("#country").get(0).selectedIndex-1]
                 $.ajax({
                     type : 'POST',
                     url : "/finish/",
@@ -496,7 +530,7 @@
                         'cnamech2': $('#cnamech2').val(),
                         'cnameeg2': $('#cnameeg2').val(),
                         'addressch': '',
-                        'addressen': $('#country').val()+$('#addressen').val(),
+                        'addressen': $('#addressen').val()+','+enc,
                         'czipcode': $('#czipcode').val()
                     },
                     success: function(ret){
@@ -511,8 +545,9 @@
                         }
                     }
                 });
-                return false
+                return false;
             }
+            
         }
     }
     

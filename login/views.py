@@ -90,7 +90,7 @@ def finish(request):
                 new_ac.save()
                 account.objects.filter(umail = usermail).update(uall = True)
                 request.session['uall'] = True
-                message = {'message':'已有插入成功','suc':'yes'}
+                message = {'message':'已为您录入基本信息','suc':'yes'}
             else:
                 new_com = Company(cnamech1=cnamech1,cnamech2=cnamech2,cnameeg1=cnameeg1,cnameeg2=cnameeg2,addressch=addressch,addressen=addressen,czipcode=czipcode)
                 new_com.save()
@@ -100,7 +100,7 @@ def finish(request):
                 new_ac.save()
                 account.objects.filter(umail = usermail).update(uall = True)
                 request.session['uall'] = True
-                message = {'message':'新建插入成功','suc':'yes'}
+                message = {'message':'已为您录入基本信息','suc':'yes'}
         except:
             message = {'message':'服务器内部错误','suc':'no'}
     return JsonResponse(message)

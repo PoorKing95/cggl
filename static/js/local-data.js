@@ -21,6 +21,55 @@ var country = {'data':['中国','阿富汗', '阿联酋', '阿曼', '阿塞拜�
     '海地', '洪都拉斯', '加拿大', '美国', '墨西哥', '尼加拉瓜', '萨尔瓦多', '圣基茨和尼维斯', '圣卢西亚', 
     '圣文森特和格林纳丁斯', '特立尼达和多巴哥', '危地马拉', '牙买加', '阿根廷', '巴拉圭', '巴西', '秘鲁', 
     '玻利维亚', '哥伦比亚', '厄瓜多尔', '圭亚那', '苏里南', '委内瑞拉', '乌拉圭', '智利']}
+var countryen = {
+    'data':[
+        'China','Afghanistan','United Arab Emirates','Oman','Azerbaijani','Pakistan','Palestine','Bahrain','Bhutan',
+
+'North Korea','East Timor','Philippines','Georgia','Kazakhstan','South Korea',
+
+'Kyrgyzstan','Cambodia','Qatar','Kuwait','Laos','Lebanon',
+
+'Maldives','Malaysia','Mongolia','Bangladesh','Myanmar','Nepal','Japan',
+
+'Saudi Arabia','Sri Lanka','Tajikistan','Thailand','Turkey','Turkmenistan',
+
+'Brunei','Armenia','Uzbekistan','Singapore','Syria','Yemen','Iraq',
+
+'Iran','Israel','India','Indonesia','Jordan','Vietnam','Algeria',
+
+'Egypt', 'Ethiopia', 'Angola', 'Benin', 'Botswana', 'Burkina Faso', 'Burundi',
+
+'Equatorial Guinea','Togo','Eritrea','Cape Verde','Gambia','Congo (Bulgaria)','Congo (Kinshasa)',
+
+'Djibouti','Guinea','Guinea-Bissau','Ghana','Gabon','Zimbabwe','Cameroon','Comoros',
+
+'Ivory Coast','Kenya','Lesotho','Liberia','Libya','Rwanda','Madagascar',
+
+'Malawi','Mali','Mauritius','Mauritania','Morocco','Mozambique','Namibia',
+
+'South Africa', 'southern Sultan', 'Niger', 'Nigeria', 'Sierra Leone', 'Senegal', 'Seychelles',' Sao Tome and Principe ',
+
+'Swaziland','Sudan','Somalia','Tanzania','Tunisia','Uganda','Zambia','Chad','Central Africa',
+
+'Albania','Ireland','Estonia','Andorra','Austria','Belarus','Bulgaria','Belgium',
+
+'Iceland','Bosnia and Herzegovina','Poland','Denmark','Germany','Russia','France','Finland','Netherlands','Montenegro','Czech Republic',
+
+'Croatia','Latvia','Lithuania','Liechtenstein','Luxembourg','Romania','Malta','Macedonia',
+
+'Moldova','Monaco','Norway','Portugal','Sweden','Switzerland','Serbia','Cyprus','San Marino',
+
+'Slovakia','Slovenia','Ukraine','Spain','Greece','Hungary','Italy','Britain','Antigua and Barbuda',
+
+'Barbados','Bahamas','Panama','Belize','Dominica','Dominica','Costa Rica','Grenada','Cuba',
+
+'Haiti','Honduras','Canada','America','Mexico','Nicaragua','El Salvador','Saint Kitts and Nevis','Saint Lucia',
+
+'Saint Vincent and the Grenadines','Trinidad and Tobago','Guatemala','Jamaica','Argentina','Paraguay','Brazil','Peru',
+
+'Bolivia','Colombia','Ecuador','Guyana','Suriname','Venezuela','Uruguay','Chile'
+    ]
+}
 var local = [
     {
         'province':'北京市',
